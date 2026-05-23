@@ -1,0 +1,37 @@
+<view class="page inspiration-page">
+  <scroll-view class="category-scroll" scroll-x enhanced show-scrollbar="{{false}}">
+    <view class="category-track">
+      <view
+        wx:for="{{categories}}"
+        wx:key="id"
+        class="category-item {{activeCategory === item.id ? 'category-item-active' : ''}}"
+        data-id="{{item.id}}"
+        bindtap="handleCategoryTap"
+      >
+        {{item.name}}
+      </view>
+    </view>
+  </scroll-view>
+
+  <view class="template-grid">
+    <view
+      wx:for="{{filteredInspirations}}"
+      wx:key="id"
+      class="template-card"
+      data-template-id="{{item.id}}"
+      bindtap="handleSame"
+    >
+      <view class="prototype-card">
+        <view class="prototype-visual">
+          <view class="prototype-spark prototype-spark-1"></view>
+          <view class="prototype-spark prototype-spark-2"></view>
+          <view class="prototype-block prototype-block-main"></view>
+          <view class="prototype-row prototype-row-1"></view>
+          <view class="prototype-row prototype-row-2"></view>
+          <view class="prototype-chip"></view>
+        </view>
+        <view class="prototype-button">做相似</view>
+      </view>
+    </view>
+  </view>
+</view>

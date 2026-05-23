@@ -1,0 +1,149 @@
+.records-page {
+  padding-bottom: 72rpx;
+}
+
+.records-head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  margin-bottom: 26rpx;
+}
+
+.records-subtitle {
+  margin-top: 8rpx;
+  color: #6b7280;
+  font-size: 24rpx;
+}
+
+.records-total {
+  min-width: 58rpx;
+  height: 58rpx;
+  border-radius: 999rpx;
+  background: #fef3c7;
+  color: #92400e;
+  font-size: 26rpx;
+  font-weight: 800;
+  line-height: 58rpx;
+  text-align: center;
+}
+
+.empty-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 58rpx 34rpx;
+  border-radius: 30rpx;
+  background: #ffffff;
+  text-align: center;
+}
+
+.empty-image {
+  display: block;
+  width: 260rpx;
+  height: 190rpx;
+}
+
+.empty-title {
+  margin-top: 12rpx;
+  color: #111827;
+  font-size: 32rpx;
+  font-weight: 800;
+}
+
+.empty-desc {
+  margin-top: 12rpx;
+  color: #6b7280;
+  font-size: 25rpx;
+  line-height: 1.45;
+}
+
+.empty-button {
+  width: 180rpx;
+  height: 64rpx;
+  margin-top: 28rpx;
+  border-radius: 999rpx;
+  background: #facc15;
+  color: #78350f;
+  font-size: 25rpx;
+  font-weight: 800;
+  line-height: 64rpx;
+}
+
+.record-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20rpx;
+}
+
+.record-card {
+  display: flex;
+  gap: 20rpx;
+  padding: 22rpx;
+  border-radius: 28rpx;
+  background: #ffffff;
+}
+
+.record-thumb {
+  width: 142rpx;
+  height: 142rpx;
+  flex: 0 0 auto;
+  border-radius: 22rpx;
+  background: #fff7d6;
+}
+
+.record-thumb-text {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #92400e;
+  font-size: 38rpx;
+  font-weight: 800;
+}
+
+.record-body {
+  min-width: 0;
+  flex: 1;
+}
+
+.record-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12rpx;
+}
+
+.record-title {
+  overflow: hidden;
+  color: #111827;
+  font-size: 29rpx;
+  font-weight: 800;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.record-status {
+  flex: 0 0 auto;
+  padding: 7rpx 12rpx;
+  border-radius: 999rpx;
+  background: #fef3c7;
+  color: #92400e;
+  font-size: 20rpx;
+  font-weight: 700;
+}
+
+.record-time {
+  margin-top: 8rpx;
+  color: #9ca3af;
+  font-size: 22rpx;
+}
+
+.record-prompt {
+  display: -webkit-box;
+  margin-top: 12rpx;
+  overflow: hidden;
+  color: #6b7280;
+  font-size: 24rpx;
+  line-height: 1.38;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}

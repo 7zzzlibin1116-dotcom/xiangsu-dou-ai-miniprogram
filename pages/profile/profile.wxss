@@ -1,0 +1,259 @@
+.profile-page {
+  position: relative;
+  min-height: 100vh;
+  padding: 158rpx 36rpx 174rpx;
+  overflow: hidden;
+  background-color: #fff7d7;
+  background-image: url("/assets/backgrounds/app-page-bg.png");
+  background-repeat: repeat-y;
+  background-position: top center;
+  background-size: 100% auto;
+}
+
+.profile-bg-dots {
+  display: none;
+}
+
+.bg-pixel {
+  position: absolute;
+  width: 18rpx;
+  height: 18rpx;
+  background: rgba(250, 204, 21, 0.25);
+}
+
+.bg-pixel-1 {
+  top: 70rpx;
+  left: 278rpx;
+}
+
+.bg-pixel-2 {
+  top: 96rpx;
+  left: 332rpx;
+}
+
+.bg-pixel-3 {
+  top: 76rpx;
+  right: 196rpx;
+}
+
+.bg-pixel-4 {
+  top: 116rpx;
+  right: 114rpx;
+}
+
+.bg-pixel-5 {
+  bottom: 42rpx;
+  right: 64rpx;
+}
+
+.bg-pixel-6 {
+  bottom: 72rpx;
+  left: 84rpx;
+}
+
+.profile-card {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: 30rpx;
+  min-height: 232rpx;
+  padding: 30rpx 32rpx;
+  border-radius: 30rpx;
+  background: #ffffff;
+}
+
+.avatar-image {
+  width: 150rpx;
+  height: 150rpx;
+  flex: 0 0 auto;
+  border-radius: 28rpx;
+  background: #facc15;
+}
+
+.profile-main {
+  min-width: 0;
+  flex: 1;
+}
+
+.nickname-row {
+  display: flex;
+  align-items: center;
+  gap: 14rpx;
+}
+
+.nickname {
+  color: #111827;
+  font-size: 42rpx;
+  font-weight: 800;
+  line-height: 1.15;
+}
+
+.edit-icon {
+  color: #9ca3af;
+  font-size: 32rpx;
+  line-height: 1;
+}
+
+.profile-desc {
+  margin-top: 14rpx;
+  color: #6b7280;
+  font-size: 25rpx;
+}
+
+.member-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18rpx;
+  margin-top: 26rpx;
+}
+
+.member-badge {
+  display: flex;
+  align-items: center;
+  gap: 8rpx;
+  height: 48rpx;
+  padding: 0 20rpx;
+  border-radius: 999rpx;
+  background: #fff4c2;
+  color: #78350f;
+  font-size: 22rpx;
+  font-weight: 700;
+}
+
+.member-crown {
+  color: #f59e0b;
+  font-size: 25rpx;
+}
+
+.upgrade-link {
+  color: #92400e;
+  font-size: 25rpx;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.stats-row {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 28rpx;
+}
+
+.stat-card {
+  position: relative;
+  width: calc((100% - 24rpx) / 2);
+  min-height: 224rpx;
+  padding: 28rpx 22rpx 24rpx;
+  overflow: hidden;
+  border-radius: 27rpx;
+  background: #ffffff;
+  text-align: center;
+}
+
+.stat-card::after {
+  position: absolute;
+  right: 18rpx;
+  bottom: 22rpx;
+  width: 82rpx;
+  height: 58rpx;
+  opacity: 0.28;
+  background-image:
+    linear-gradient(#facc15 14rpx, transparent 14rpx),
+    linear-gradient(90deg, #facc15 14rpx, transparent 14rpx);
+  background-size: 28rpx 28rpx;
+  content: "";
+}
+
+.stat-icon {
+  display: block;
+  width: 66rpx;
+  height: 66rpx;
+  margin: 0 auto 12rpx;
+}
+
+.stat-value {
+  color: #f59e0b;
+  font-size: 60rpx;
+  font-weight: 900;
+  line-height: 1;
+}
+
+.stat-label {
+  margin-top: 18rpx;
+  color: #374151;
+  font-size: 25rpx;
+}
+
+.stat-help {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 26rpx;
+  height: 26rpx;
+  margin-left: 4rpx;
+  border-radius: 999rpx;
+  border: 2rpx solid #d1d5db;
+  color: #9ca3af;
+  font-size: 18rpx;
+  line-height: 1;
+}
+
+.menu-card {
+  position: relative;
+  z-index: 2;
+  margin-top: 28rpx;
+  overflow: hidden;
+  border-radius: 30rpx;
+  background: #ffffff;
+}
+
+.menu-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 109rpx;
+  padding: 0 32rpx;
+  border-bottom: 1rpx solid #f1f2f4;
+}
+
+.menu-item-last {
+  border-bottom: 0;
+}
+
+.menu-left {
+  display: flex;
+  align-items: center;
+  gap: 22rpx;
+}
+
+.menu-icon {
+  display: block;
+  width: 54rpx;
+  height: 54rpx;
+}
+
+.menu-title {
+  color: #111827;
+  font-size: 30rpx;
+  font-weight: 700;
+}
+
+.menu-arrow {
+  color: #111827;
+  font-size: 48rpx;
+  line-height: 1;
+}
+
+.profile-banner {
+  position: relative;
+  z-index: 2;
+  display: block;
+  width: 100%;
+  height: 146rpx;
+  margin-top: 30rpx;
+  border-radius: 22rpx;
+  background: #facc15;
+}

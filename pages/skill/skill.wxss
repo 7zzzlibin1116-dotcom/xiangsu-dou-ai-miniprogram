@@ -1,0 +1,376 @@
+.skill-page {
+  padding-top: 0;
+  padding-bottom: 72rpx;
+}
+
+.exit-button {
+  position: fixed;
+  top: 92rpx;
+  left: 32rpx;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 58rpx;
+  height: 58rpx;
+  border-radius: 999rpx;
+  background: rgba(255, 255, 255, 0.88);
+  color: #111827;
+  font-size: 36rpx;
+  font-weight: 800;
+  line-height: 1;
+  box-shadow: 0 10rpx 24rpx rgba(120, 53, 15, 0.08);
+}
+
+.skill-header {
+  display: flex;
+  align-items: center;
+  gap: 20rpx;
+  margin: 170rpx 0 28rpx;
+}
+
+.skill-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 92rpx;
+  height: 92rpx;
+  flex: 0 0 auto;
+  border-radius: 28rpx;
+  background: transparent;
+  color: #92400e;
+  font-size: 34rpx;
+  font-weight: 800;
+}
+
+.skill-icon-image {
+  display: block;
+  width: 82rpx;
+  height: 82rpx;
+}
+
+.skill-meta {
+  min-width: 0;
+}
+
+.skill-title {
+  color: #111827;
+  font-size: 38rpx;
+  font-weight: 800;
+  line-height: 1.25;
+}
+
+.skill-desc {
+  margin-top: 8rpx;
+  color: #6b7280;
+  font-size: 25rpx;
+  line-height: 1.4;
+}
+
+.form-card,
+.result-card {
+  padding: 28rpx;
+  border-radius: 30rpx;
+  background: #ffffff;
+}
+
+.field-block + .field-block {
+  margin-top: 28rpx;
+}
+
+.template-preview {
+  margin-bottom: 28rpx;
+}
+
+.template-preview-image {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 360rpx;
+  overflow: hidden;
+  border-radius: 24rpx;
+  background:
+    linear-gradient(#fff7d6 18rpx, transparent 18rpx),
+    linear-gradient(90deg, #fff7d6 18rpx, transparent 18rpx),
+    #ffffff;
+  background-size: 58rpx 58rpx;
+}
+
+.template-preview-block {
+  position: absolute;
+  left: 36rpx;
+  top: 42rpx;
+  width: 190rpx;
+  height: 174rpx;
+  border-radius: 24rpx;
+  background: rgba(250, 204, 21, 0.72);
+}
+
+.template-preview-line {
+  position: absolute;
+  left: 36rpx;
+  height: 24rpx;
+  border-radius: 999rpx;
+  background: rgba(146, 64, 14, 0.18);
+}
+
+.template-preview-line-1 {
+  top: 250rpx;
+  width: 330rpx;
+}
+
+.template-preview-line-2 {
+  top: 296rpx;
+  width: 230rpx;
+}
+
+.template-preview-text {
+  margin-top: 14rpx;
+  color: #92400e;
+  font-size: 24rpx;
+  font-weight: 800;
+}
+
+.field-label {
+  margin-bottom: 16rpx;
+  color: #111827;
+  font-size: 27rpx;
+  font-weight: 800;
+}
+
+.field-line {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16rpx;
+  margin-bottom: 16rpx;
+}
+
+.field-label-inline {
+  margin-bottom: 0;
+}
+
+.fill-last-button {
+  width: 190rpx;
+  height: 54rpx;
+  flex: 0 0 auto;
+  border-radius: 999rpx;
+  background: #fef3c7;
+  color: #92400e;
+  font-size: 22rpx;
+  font-weight: 700;
+  line-height: 54rpx;
+}
+
+.upload-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 300rpx;
+  overflow: hidden;
+  border: 2rpx dashed #facc15;
+  border-radius: 28rpx;
+  background: #fffdf2;
+}
+
+.upload-box-filled {
+  border-style: solid;
+  background: #ffffff;
+}
+
+.uploaded-image {
+  width: 100%;
+  height: 100%;
+}
+
+.upload-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #92400e;
+}
+
+.upload-icon {
+  display: block;
+  width: 92rpx;
+  height: 92rpx;
+}
+
+.upload-text {
+  margin-top: 18rpx;
+  font-size: 26rpx;
+  font-weight: 700;
+}
+
+.store-form {
+  border-radius: 24rpx;
+  background: #fffaf0;
+  padding: 8rpx 22rpx;
+}
+
+.store-field {
+  display: flex;
+  align-items: center;
+  min-height: 82rpx;
+  border-bottom: 1rpx solid #eef2f7;
+}
+
+.store-field:last-child {
+  border-bottom: 0;
+}
+
+.store-label {
+  width: 176rpx;
+  flex: 0 0 auto;
+  color: #374151;
+  font-size: 25rpx;
+  font-weight: 700;
+}
+
+.store-input {
+  min-width: 0;
+  flex: 1;
+  color: #111827;
+  font-size: 25rpx;
+}
+
+.style-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  row-gap: 14rpx;
+}
+
+.dianping-category-block {
+  margin-bottom: 28rpx;
+}
+
+.style-chip {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: calc((100% - 30rpx) / 4);
+  min-width: 0;
+  height: 56rpx;
+  padding: 0;
+  border-radius: 999rpx;
+  background: #fff7d6;
+  color: #78350f;
+  font-size: 20rpx;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.style-chip-active {
+  background: #fef3c7;
+  color: #92400e;
+  box-shadow: inset 0 0 0 2rpx #facc15;
+}
+
+.custom-style-input {
+  width: 100%;
+  height: 78rpx;
+  margin-top: 18rpx;
+  padding: 0 24rpx;
+  border-radius: 22rpx;
+  background: #fffaf0;
+  color: #111827;
+  font-size: 25rpx;
+}
+
+.prompt-input {
+  width: 100%;
+  min-height: 220rpx;
+  padding: 24rpx;
+  border-radius: 24rpx;
+  background: #fffaf0;
+  color: #111827;
+  font-size: 26rpx;
+  line-height: 1.45;
+}
+
+.input-placeholder {
+  color: #9ca3af;
+}
+
+.input-count {
+  margin-top: 12rpx;
+  text-align: right;
+  color: #9ca3af;
+  font-size: 22rpx;
+}
+
+.generate-button,
+.download-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 88rpx;
+  margin-top: 28rpx;
+  border-radius: 999rpx;
+  background: linear-gradient(135deg, #fde047 0%, #facc15 100%);
+  color: #78350f;
+  font-size: 29rpx;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.button-icon {
+  display: block;
+  width: 42rpx;
+  height: 42rpx;
+  margin-right: 10rpx;
+}
+
+.generate-button-disabled {
+  opacity: 0.72;
+}
+
+.result-card {
+  margin-top: 28rpx;
+}
+
+.result-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 20rpx;
+}
+
+.result-title {
+  color: #111827;
+  font-size: 31rpx;
+  font-weight: 800;
+}
+
+.result-subtitle {
+  margin-top: 8rpx;
+  color: #6b7280;
+  font-size: 23rpx;
+  line-height: 1.4;
+}
+
+.done-badge {
+  flex: 0 0 auto;
+  padding: 8rpx 14rpx;
+  border-radius: 999rpx;
+  background: #ecfdf5;
+  color: #059669;
+  font-size: 22rpx;
+  font-weight: 700;
+}
+
+.result-image {
+  width: 100%;
+  height: 420rpx;
+  margin-top: 24rpx;
+  border-radius: 24rpx;
+  background: #fff7d6;
+}
+
+.download-button {
+  margin-top: 24rpx;
+  background: #facc15;
+}

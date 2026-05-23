@@ -1,0 +1,49 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/skill/skill",
+    "pages/records/records",
+    "pages/inspiration/inspiration",
+    "pages/profile/profile"
+  ],
+  "window": {
+    "navigationBarTitleText": "像素豆 AI",
+    "navigationBarBackgroundColor": "#FFF7D7",
+    "navigationBarTextStyle": "black",
+    "backgroundColor": "#FFF7D7"
+  },
+  "tabBar": {
+    "color": "#6B7280",
+    "selectedColor": "#FACC15",
+    "backgroundColor": "#FFFFFF",
+    "borderStyle": "white",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "首页",
+        "iconPath": "assets/tabbar/home.png",
+        "selectedIconPath": "assets/tabbar/home-active.png"
+      },
+      {
+        "pagePath": "pages/records/records",
+        "text": "创作记录",
+        "iconPath": "assets/tabbar/records.png",
+        "selectedIconPath": "assets/tabbar/records-active.png"
+      },
+      {
+        "pagePath": "pages/inspiration/inspiration",
+        "text": "灵感广场",
+        "iconPath": "assets/tabbar/inspiration.png",
+        "selectedIconPath": "assets/tabbar/inspiration-active.png"
+      },
+      {
+        "pagePath": "pages/profile/profile",
+        "text": "我的",
+        "iconPath": "assets/tabbar/profile.png",
+        "selectedIconPath": "assets/tabbar/profile-active.png"
+      }
+    ]
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json"
+}

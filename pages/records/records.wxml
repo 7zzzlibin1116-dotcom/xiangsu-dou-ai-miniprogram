@@ -1,0 +1,37 @@
+<view class="page records-page">
+  <view class="records-head">
+    <view>
+      <view class="section-title">创作记录</view>
+      <view class="records-subtitle">你生成过的内容都会保存在这里</view>
+    </view>
+    <view class="records-total">{{records.length}}</view>
+  </view>
+
+  <view wx:if="{{records.length === 0}}" class="empty-card card-shadow">
+    <image class="empty-image" src="/assets/empty/empty-records.png" mode="aspectFit"></image>
+    <view class="empty-title">暂无创作记录</view>
+    <view class="empty-desc">去首页选择一个 Skill，生成你的第一条内容。</view>
+    <button class="empty-button" bindtap="goHome">去创作</button>
+  </view>
+
+  <view wx:else class="record-list">
+    <view
+      wx:for="{{records}}"
+      wx:key="id"
+      class="record-card card-shadow"
+      data-index="{{index}}"
+      bindtap="handleRecordTap"
+    >
+      <image wx:if="{{item.resultImage}}" class="record-thumb" src="{{item.resultImage}}" mode="aspectFill"></image>
+      <view wx:else class="record-thumb record-thumb-text">文</view>
+      <view class="record-body">
+        <view class="record-top">
+          <view class="record-title">{{item.skillTitle}}</view>
+          <view class="record-status">{{item.status}}</view>
+        </view>
+        <view class="record-time">{{item.createdAt}}</view>
+        <view class="record-prompt">{{item.prompt}}</view>
+      </view>
+    </view>
+  </view>
+</view>
