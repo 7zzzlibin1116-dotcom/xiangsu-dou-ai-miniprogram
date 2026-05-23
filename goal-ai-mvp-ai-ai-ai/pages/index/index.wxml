@@ -1,0 +1,41 @@
+<view class="page index-page">
+  <view class="hero card-shadow" bindtap="handleStart">
+    <image class="hero-image" src="/assets/banner-pixeldou.jpg" mode="aspectFill"></image>
+  </view>
+
+  <view class="category-row">
+    <button
+      wx:for="{{categories}}"
+      wx:key="id"
+      class="category-pill {{activeCategory === item.id ? 'category-pill-active' : ''}}"
+      data-id="{{item.id}}"
+      bindtap="handleCategoryChange"
+    >
+      {{item.name}}
+    </button>
+  </view>
+
+  <view class="section-head">
+    <view class="section-title">热门 Skills</view>
+  </view>
+
+  <view class="skills-grid">
+    <view
+      wx:for="{{filteredSkills}}"
+      wx:key="id"
+      class="skill-card card-shadow"
+      data-id="{{item.id}}"
+      bindtap="handleSkillTap"
+    >
+      <view class="skill-icon">
+        <image wx:if="{{item.iconImage}}" class="skill-icon-image" src="{{item.iconImage}}" mode="aspectFit"></image>
+        <text wx:else>{{item.icon}}</text>
+      </view>
+      <view class="skill-title">{{item.title}}</view>
+      <view class="skill-desc">{{item.description}}</view>
+      <view class="tag-row">
+        <text wx:for="{{item.tags}}" wx:for-item="tag" wx:key="*this" class="tag">{{tag}}</text>
+      </view>
+    </view>
+  </view>
+</view>

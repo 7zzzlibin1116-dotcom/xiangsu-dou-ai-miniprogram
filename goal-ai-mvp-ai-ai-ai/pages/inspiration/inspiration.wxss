@@ -1,0 +1,149 @@
+.inspiration-page {
+  padding: 24rpx 32rpx 120rpx;
+}
+
+.category-scroll {
+  width: 100%;
+  margin: 0 -32rpx 26rpx;
+  padding: 0 32rpx;
+  white-space: nowrap;
+}
+
+.category-track {
+  display: inline-flex;
+  align-items: center;
+  gap: 36rpx;
+  min-width: 100%;
+  padding: 6rpx 32rpx 20rpx;
+}
+
+.category-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 112rpx;
+  height: 64rpx;
+  padding: 0 26rpx;
+  border-radius: 999rpx;
+  color: #111827;
+  font-size: 30rpx;
+  font-weight: 700;
+}
+
+.category-item-active {
+  background: rgba(255, 255, 255, 0.86);
+  color: #111827;
+  box-shadow: 0 12rpx 28rpx rgba(120, 53, 15, 0.08);
+}
+
+.template-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  row-gap: 26rpx;
+}
+
+.template-card {
+  width: calc((100% - 24rpx) / 2);
+  height: 470rpx;
+  overflow: hidden;
+  border-radius: 24rpx;
+  background: #ffffff;
+  box-shadow: 0 14rpx 34rpx rgba(120, 53, 15, 0.08);
+}
+
+.prototype-card {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  padding: 22rpx;
+  background:
+    linear-gradient(135deg, rgba(254, 243, 199, 0.92) 0%, rgba(255, 255, 255, 0.96) 56%, rgba(255, 248, 213, 0.92) 100%);
+}
+
+.prototype-visual {
+  position: relative;
+  height: 332rpx;
+  overflow: hidden;
+  border-radius: 20rpx;
+  background:
+    linear-gradient(#fff7d6 18rpx, transparent 18rpx),
+    linear-gradient(90deg, #fff7d6 18rpx, transparent 18rpx),
+    #ffffff;
+  background-size: 54rpx 54rpx;
+}
+
+.prototype-block {
+  position: absolute;
+  border-radius: 18rpx;
+  background: #facc15;
+}
+
+.prototype-block-main {
+  left: 34rpx;
+  top: 42rpx;
+  width: 160rpx;
+  height: 164rpx;
+  opacity: 0.78;
+}
+
+.prototype-row {
+  position: absolute;
+  left: 34rpx;
+  height: 20rpx;
+  border-radius: 999rpx;
+  background: rgba(146, 64, 14, 0.18);
+}
+
+.prototype-row-1 {
+  top: 230rpx;
+  width: 210rpx;
+}
+
+.prototype-row-2 {
+  top: 268rpx;
+  width: 150rpx;
+}
+
+.prototype-chip {
+  position: absolute;
+  right: 30rpx;
+  top: 58rpx;
+  width: 72rpx;
+  height: 72rpx;
+  border-radius: 24rpx;
+  background: #fef3c7;
+  box-shadow: inset 0 0 0 4rpx #facc15;
+}
+
+.prototype-spark {
+  position: absolute;
+  width: 18rpx;
+  height: 18rpx;
+  background: rgba(250, 204, 21, 0.42);
+}
+
+.prototype-spark-1 {
+  top: 28rpx;
+  right: 112rpx;
+}
+
+.prototype-spark-2 {
+  right: 48rpx;
+  bottom: 40rpx;
+}
+
+.prototype-button {
+  position: absolute;
+  left: 28rpx;
+  right: 28rpx;
+  bottom: 26rpx;
+  height: 72rpx;
+  border-radius: 18rpx;
+  background: rgba(55, 65, 81, 0.78);
+  color: #ffffff;
+  font-size: 28rpx;
+  font-weight: 800;
+  line-height: 72rpx;
+  text-align: center;
+}

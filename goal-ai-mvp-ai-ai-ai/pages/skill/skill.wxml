@@ -1,0 +1,175 @@
+<view class="page skill-page">
+  <view class="exit-button" bindtap="handleExit">×</view>
+
+  <view class="skill-header">
+    <view class="skill-icon">
+      <image wx:if="{{skill.iconImage}}" class="skill-icon-image" src="{{skill.iconImage}}" mode="aspectFit"></image>
+      <text wx:else>{{skill.icon || 'AI'}}</text>
+    </view>
+    <view class="skill-meta">
+      <view class="skill-title">{{skill.title || '像素豆 AI'}}</view>
+      <view class="skill-desc">{{skill.description || '让 AI 使用起来更简单'}}</view>
+    </view>
+  </view>
+
+  <view wx:if="{{isMarketingFormSkill}}" class="form-card card-shadow">
+    <view class="field-block">
+      <view class="field-label">一. 上传视觉素材</view>
+      <button class="upload-box {{uploadedImage ? 'upload-box-filled' : ''}}" bindtap="handleChooseImage">
+        <image wx:if="{{uploadedImage}}" class="uploaded-image" src="{{uploadedImage}}" mode="aspectFill"></image>
+        <view wx:else class="upload-placeholder">
+          <image class="upload-icon" src="/assets/common/upload.png" mode="aspectFit"></image>
+          <view class="upload-text">上传视觉素材</view>
+        </view>
+      </button>
+    </view>
+
+    <view class="field-block">
+      <view class="field-line">
+        <view class="field-label field-label-inline">二. 门店信息</view>
+        <button class="fill-last-button" bindtap="handleFillLastMarketing">一键填入上次内容</button>
+      </view>
+      <view class="store-form">
+        <view class="store-field">
+          <view class="store-label">1. 城市：</view>
+          <input class="store-input" value="{{marketingForm.city}}" data-field="city" placeholder="请输入城市" placeholder-class="input-placeholder" bindinput="handleMarketingInput" />
+        </view>
+        <view class="store-field">
+          <view class="store-label">2. 商圈：</view>
+          <input class="store-input" value="{{marketingForm.businessArea}}" data-field="businessArea" placeholder="请输入商圈" placeholder-class="input-placeholder" bindinput="handleMarketingInput" />
+        </view>
+        <view class="store-field">
+          <view class="store-label">3. 行业：</view>
+          <input class="store-input" value="{{marketingForm.industry}}" data-field="industry" placeholder="请输入行业" placeholder-class="input-placeholder" bindinput="handleMarketingInput" />
+        </view>
+        <view class="store-field">
+          <view class="store-label">4. 品类：</view>
+          <input class="store-input" value="{{marketingForm.category}}" data-field="category" placeholder="请输入品类" placeholder-class="input-placeholder" bindinput="handleMarketingInput" />
+        </view>
+        <view class="store-field">
+          <view class="store-label">5. 品牌名称：</view>
+          <input class="store-input" value="{{marketingForm.brandName}}" data-field="brandName" placeholder="请输入品牌名称" placeholder-class="input-placeholder" bindinput="handleMarketingInput" />
+        </view>
+      </view>
+    </view>
+
+    <view class="field-block">
+      <view class="field-label">三. 选择{{marketingStyleLabel}}</view>
+      <view class="style-grid">
+        <view
+          wx:for="{{noteStyles}}"
+          wx:key="*this"
+          class="style-chip {{marketingForm.noteStyle === item ? 'style-chip-active' : ''}}"
+          data-style="{{item}}"
+          bindtap="handleStyleSelect"
+        >
+          {{item}}
+        </view>
+      </view>
+      <input
+        wx:if="{{hasCustomStyle && marketingForm.noteStyle === '自定义'}}"
+        class="custom-style-input"
+        value="{{marketingForm.customStyle}}"
+        data-field="customStyle"
+        placeholder="{{customStylePlaceholder}}"
+        placeholder-class="input-placeholder"
+        bindinput="handleMarketingInput"
+      />
+    </view>
+
+    <view class="field-block">
+      <view class="field-label">四. 补充核心卖点</view>
+      <textarea
+        class="prompt-input"
+        maxlength="500"
+        value="{{marketingForm.sellingPoints}}"
+        data-field="sellingPoints"
+        placeholder="活动日期/套餐价格/活动规则等等"
+        placeholder-class="input-placeholder"
+        bindinput="handleMarketingInput"
+      ></textarea>
+      <view class="input-count">{{marketingForm.sellingPoints.length}}/500</view>
+    </view>
+
+    <view
+      class="generate-button {{generating ? 'generate-button-disabled' : ''}}"
+      bindtap="handleGenerate"
+    >
+      <image class="button-icon" src="/assets/common/magic-generate.png" mode="aspectFit"></image>
+      <text>{{generating ? '生成中...' : '立即生成'}}</text>
+    </view>
+  </view>
+
+  <view wx:else class="form-card card-shadow">
+    <view wx:if="{{isTemplateSimilar}}" class="template-preview">
+      <view class="template-preview-image">
+        <view class="template-preview-block"></view>
+        <view class="template-preview-line template-preview-line-1"></view>
+        <view class="template-preview-line template-preview-line-2"></view>
+      </view>
+      <view class="template-preview-text">当前模板：{{template.title}}</view>
+    </view>
+
+    <view wx:if="{{isImageSkill}}" class="field-block">
+      <view class="field-label">{{isTemplateSimilar ? '上传图片' : (skill.uploadLabel || '参考图片')}}</view>
+      <button class="upload-box {{uploadedImage ? 'upload-box-filled' : ''}}" bindtap="handleChooseImage">
+        <image wx:if="{{uploadedImage}}" class="uploaded-image" src="{{uploadedImage}}" mode="aspectFill"></image>
+        <view wx:else class="upload-placeholder">
+          <image class="upload-icon" src="/assets/common/upload.png" mode="aspectFit"></image>
+          <view class="upload-text">{{isTemplateSimilar ? '上传图片' : (skill.uploadText || '上传参考图片')}}</view>
+        </view>
+      </button>
+    </view>
+
+    <view wx:if="{{!isTemplateSimilar}}" class="field-block">
+      <view wx:if="{{isDianpingImage}}" class="dianping-category-block">
+        <view class="field-label">图片分类</view>
+        <view class="style-grid">
+          <view
+            wx:for="{{dianpingCategories}}"
+            wx:key="*this"
+            class="style-chip {{selectedDianpingCategory === item ? 'style-chip-active' : ''}}"
+            data-category="{{item}}"
+            bindtap="handleDianpingCategorySelect"
+          >
+            {{item}}
+          </view>
+        </view>
+      </view>
+
+      <view class="field-label">需求描述</view>
+      <textarea
+        class="prompt-input"
+        maxlength="500"
+        value="{{prompt}}"
+        placeholder="{{skill.promptPlaceholder || '请输入你的需求，例如风格、用途、文案方向'}}"
+        placeholder-class="input-placeholder"
+        bindinput="handlePromptInput"
+      ></textarea>
+      <view class="input-count">{{prompt.length}}/500</view>
+    </view>
+
+    <view
+      class="generate-button {{generating ? 'generate-button-disabled' : ''}}"
+      bindtap="handleGenerate"
+    >
+      <image class="button-icon" src="/assets/common/magic-generate.png" mode="aspectFit"></image>
+      <text>{{generating ? '生成中...' : '立即生成'}}</text>
+    </view>
+  </view>
+
+  <view wx:if="{{resultImage}}" class="result-card card-shadow">
+    <view class="result-head">
+      <view>
+        <view class="result-title">生成结果</view>
+        <view class="result-subtitle">这是 mock 结果图，后续将由后端 AI 返回</view>
+      </view>
+      <view class="done-badge">已完成</view>
+    </view>
+    <image class="result-image" src="{{resultImage}}" mode="aspectFill"></image>
+    <button class="download-button" bindtap="handleDownload">
+      <image class="button-icon" src="/assets/common/download.png" mode="aspectFit"></image>
+      <text>保存图片</text>
+    </button>
+  </view>
+</view>
