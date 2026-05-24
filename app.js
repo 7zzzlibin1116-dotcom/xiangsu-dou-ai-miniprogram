@@ -1,3 +1,5 @@
+const account = require('./utils/account');
+
 App({
   globalData: {
     appName: '像素豆 AI',
@@ -10,5 +12,7 @@ App({
     if (!Array.isArray(records)) {
       wx.setStorageSync('PIXELDOU_RECORDS', []);
     }
+
+    account.initAccount();
   }
 });

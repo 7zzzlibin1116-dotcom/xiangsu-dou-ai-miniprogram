@@ -137,16 +137,16 @@
 .stats-row {
   position: relative;
   z-index: 2;
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18rpx;
   margin-top: 28rpx;
 }
 
 .stat-card {
   position: relative;
-  width: calc((100% - 24rpx) / 2);
-  min-height: 224rpx;
-  padding: 28rpx 22rpx 24rpx;
+  min-height: 196rpx;
+  padding: 26rpx 14rpx 22rpx;
   overflow: hidden;
   border-radius: 27rpx;
   background: #ffffff;
@@ -154,17 +154,7 @@
 }
 
 .stat-card::after {
-  position: absolute;
-  right: 18rpx;
-  bottom: 22rpx;
-  width: 82rpx;
-  height: 58rpx;
-  opacity: 0.28;
-  background-image:
-    linear-gradient(#facc15 14rpx, transparent 14rpx),
-    linear-gradient(90deg, #facc15 14rpx, transparent 14rpx);
-  background-size: 28rpx 28rpx;
-  content: "";
+  display: none;
 }
 
 .stat-icon {
@@ -176,7 +166,7 @@
 
 .stat-value {
   color: #f59e0b;
-  font-size: 60rpx;
+  font-size: 52rpx;
   font-weight: 900;
   line-height: 1;
 }
@@ -184,7 +174,18 @@
 .stat-label {
   margin-top: 18rpx;
   color: #374151;
-  font-size: 25rpx;
+  font-size: 22rpx;
+}
+
+.login-button {
+  height: 48rpx;
+  padding: 0 22rpx;
+  border-radius: 999rpx;
+  background: #facc15;
+  color: #78350f;
+  font-size: 23rpx;
+  font-weight: 900;
+  line-height: 48rpx;
 }
 
 .stat-help {

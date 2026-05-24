@@ -18,8 +18,6 @@
       wx:for="{{filteredInspirations}}"
       wx:key="id"
       class="template-card"
-      data-template-id="{{item.id}}"
-      bindtap="handleSame"
     >
       <view class="prototype-card">
         <view class="prototype-visual">
@@ -30,7 +28,22 @@
           <view class="prototype-row prototype-row-2"></view>
           <view class="prototype-chip"></view>
         </view>
-        <view class="prototype-button">做相似</view>
+        <view class="prototype-actions">
+          <button
+            class="prototype-favorite {{item.favorited ? 'prototype-favorite-active' : ''}}"
+            catchtap="handleFavoriteTap"
+            data-index="{{index}}"
+          >
+            {{item.favorited ? '★' : '☆'}}
+          </button>
+          <button
+            class="prototype-button"
+            data-template-id="{{item.id}}"
+            bindtap="handleSame"
+          >
+            做相似
+          </button>
+        </view>
       </view>
     </view>
   </view>

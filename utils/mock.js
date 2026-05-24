@@ -45,6 +45,7 @@ const skills = [
     icon: '图',
     iconImage: '/assets/skills/photo-retouch.png',
     promptPlaceholder: '按你的想法修改图片，例如：修改文字、去除杂物、调整颜色、增强清晰度',
+    defaultPrompt: '根据用户上传的图片进行 AI 修图，优先提升清晰度、光线、色彩、构图和整体质感；如果用户填写了具体修改要求，以用户要求为准，保持画面自然真实。',
     tags: ['图片', '修图']
   },
   {
@@ -108,14 +109,14 @@ const skills = [
     tags: ['图片', '修复']
   },
   {
-    id: 'image-style',
-    title: '图片风格转换',
-    description: '把照片模拟转换为胶片、插画等风格。',
+    id: 'high-eq-reply',
+    title: '高情商回复',
+    description: '根据不同聊天场景，生成得体自然的回复。',
     category: 'life',
-    type: 'image',
-    icon: '风',
-    iconImage: '/assets/skills/image-style.png',
-    tags: ['图片', '风格']
+    type: 'text',
+    icon: '回',
+    iconImage: '/assets/skills/community-broadcast.png',
+    tags: ['沟通', '回复']
   },
   {
     id: 'try-on',
@@ -148,14 +149,18 @@ const skills = [
     tags: ['生活', '灵感']
   },
   {
-    id: 'essay-polish',
-    title: '作文润色',
-    description: '优化作文表达，让结构和语句更自然。',
+    id: 'id-photo',
+    title: '证件照生成/换底色',
+    description: '上传照片，生成证件照或快速更换背景色。',
     category: 'student',
-    type: 'text',
-    icon: '作',
+    type: 'image',
+    icon: '证',
     iconImage: '/assets/skills/essay-polish.png',
-    tags: ['学生', '写作']
+    uploadLabel: '上传人像照片',
+    uploadText: '上传正面照片',
+    promptPlaceholder: '可选填写要求，例如：保持自然、不要过度美颜、衣服正式一点',
+    defaultPrompt: '根据上传人像生成规范证件照，保持五官自然清晰。',
+    tags: ['学生', '证件照']
   },
   {
     id: 'paper-outline',
@@ -165,6 +170,7 @@ const skills = [
     type: 'text',
     icon: '纲',
     iconImage: '/assets/skills/paper-outline.png',
+    defaultPrompt: '根据用户提供的论文题目、研究方向或课程要求，生成结构清晰的论文大纲，包含标题、摘要方向、章节结构、每章重点、研究方法和可展开的论点。',
     tags: ['论文', '大纲']
   },
   {
@@ -175,6 +181,7 @@ const skills = [
     type: 'text',
     icon: '译',
     iconImage: '/assets/skills/english-translate.png',
+    defaultPrompt: '将用户输入的中文或英文内容进行准确翻译，并根据学习场景润色表达；输出自然、清晰、语法正确的译文，必要时补充关键词解释或更地道表达。',
     tags: ['英语', '学习']
   },
   {
@@ -185,6 +192,7 @@ const skills = [
     type: 'text',
     icon: '查',
     iconImage: '/assets/skills/paper-check.png',
+    defaultPrompt: '检查用户提供的论文片段中可能重复、口语化或表达不够学术的内容，并给出降重改写建议；输出改写版本和修改原因，保持原意不变。',
     tags: ['论文', '改写']
   },
   {
@@ -195,6 +203,7 @@ const skills = [
     type: 'text',
     icon: 'P',
     iconImage: '/assets/skills/ppt-outline.png',
+    defaultPrompt: '根据用户提供的主题、汇报对象和内容方向，生成一份 PPT 大纲，包含页标题、每页核心内容、讲述顺序和适合展示的要点表达。',
     tags: ['PPT', '汇报']
   },
   {
@@ -219,6 +228,7 @@ const skills = [
     type: 'text',
     icon: '会',
     iconImage: '/assets/skills/meeting-summary.png',
+    defaultPrompt: '将用户提供的会议记录、聊天内容或要点整理成专业会议纪要，包含会议主题、核心结论、讨论要点、待办事项、负责人和截止时间。',
     tags: ['效率', '总结']
   },
   {
@@ -229,6 +239,7 @@ const skills = [
     type: 'text',
     icon: '邮',
     iconImage: '/assets/skills/email-polish.png',
+    defaultPrompt: '将用户提供的邮件草稿润色为清晰、礼貌、专业的商务邮件；保留原意，优化结构、语气、措辞和行动请求，让收件人更容易理解并回复。',
     tags: ['工作', '沟通']
   },
   {
@@ -239,6 +250,7 @@ const skills = [
     type: 'text',
     icon: '周',
     iconImage: '/assets/skills/weekly-report.png',
+    defaultPrompt: '根据用户提供的本周工作事项，生成简洁专业的周报，包含本周完成、关键进展、数据结果、问题风险、下周计划和需要协同的事项。',
     tags: ['周报', '效率']
   },
   {
@@ -399,12 +411,35 @@ function getRecords() {
   return Promise.resolve(Array.isArray(records) ? clone(records) : []);
 }
 
+function deleteRecord(id) {
+  const records = wx.getStorageSync(STORAGE_KEY) || [];
+  const nextRecords = Array.isArray(records)
+    ? records.filter(item => item.id !== id)
+    : [];
+
+  wx.setStorageSync(STORAGE_KEY, nextRecords);
+
+  return Promise.resolve({
+    success: true
+  });
+}
+
+function clearRecords() {
+  wx.setStorageSync(STORAGE_KEY, []);
+
+  return Promise.resolve({
+    success: true
+  });
+}
+
 function saveRecord(record) {
   const records = wx.getStorageSync(STORAGE_KEY) || [];
+  const profile = wx.getStorageSync('PIXELDOU_USER_PROFILE') || {};
   const normalized = {
     id: `record_${Date.now()}`,
     status: '已完成',
     createdAt: formatTime(new Date()),
+    userId: profile.userId || 'mock_guest',
     ...record
   };
 
@@ -425,5 +460,7 @@ module.exports = {
   createTask,
   getTaskStatus,
   getRecords,
+  deleteRecord,
+  clearRecords,
   saveRecord
 };

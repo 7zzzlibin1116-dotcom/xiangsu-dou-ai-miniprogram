@@ -4,7 +4,10 @@
       <view class="section-title">创作记录</view>
       <view class="records-subtitle">你生成过的内容都会保存在这里</view>
     </view>
-    <view class="records-total">{{records.length}}</view>
+    <view class="records-head-actions">
+      <button class="clear-button" bindtap="handleClearAll">一键清空</button>
+      <view class="records-total">{{records.length}}</view>
+    </view>
   </view>
 
   <view wx:if="{{records.length === 0}}" class="empty-card card-shadow">
@@ -26,7 +29,25 @@
       <view wx:else class="record-thumb record-thumb-text">文</view>
       <view class="record-body">
         <view class="record-top">
-          <view class="record-title">{{item.skillTitle}}</view>
+          <view class="record-main-head">
+            <view class="record-title">{{item.skillTitle}}</view>
+            <view class="record-actions">
+              <button
+                class="record-favorite {{item.favorited ? 'record-favorite-active' : ''}}"
+                catchtap="handleFavoriteTap"
+                data-index="{{index}}"
+              >
+                {{item.favoriteText}}
+              </button>
+              <button
+                class="record-delete"
+                catchtap="handleDeleteTap"
+                data-index="{{index}}"
+              >
+                删除
+              </button>
+            </view>
+          </view>
           <view class="record-status">{{item.status}}</view>
         </view>
         <view class="record-time">{{item.createdAt}}</view>

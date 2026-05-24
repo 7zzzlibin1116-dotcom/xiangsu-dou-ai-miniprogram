@@ -1,0 +1,458 @@
+.membership-page {
+  position: relative;
+  min-height: 100vh;
+  padding: 88rpx 30rpx 220rpx;
+  overflow: hidden;
+  background-color: #fff7d7;
+  background-image: url("/assets/backgrounds/app-page-bg.png");
+  background-repeat: repeat-y;
+  background-position: top center;
+  background-size: 100% auto;
+}
+
+.top-bar {
+  position: relative;
+  z-index: 3;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  min-height: 86rpx;
+}
+
+.back-hit {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 86rpx;
+  height: 62rpx;
+  color: #78350f;
+  font-size: 26rpx;
+  font-weight: 800;
+}
+
+.record-entry {
+  display: flex;
+  align-items: center;
+  width: 104rpx;
+  height: 62rpx;
+  color: #78350f;
+  font-size: 22rpx;
+  font-weight: 700;
+}
+
+.hero-title-row {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: -54rpx;
+}
+
+.hero-title {
+  color: #facc15;
+  font-size: 48rpx;
+  font-weight: 900;
+  letter-spacing: 0;
+  line-height: 1.15;
+  text-shadow:
+    2rpx 0 #111827,
+    -2rpx 0 #111827,
+    0 2rpx #111827,
+    0 -2rpx #111827,
+    4rpx 4rpx 0 #92400e;
+}
+
+.hero-subtitle {
+  position: relative;
+  z-index: 2;
+  margin-top: 18rpx;
+  color: #78350f;
+  font-size: 28rpx;
+  text-align: center;
+}
+
+.balance-card {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: 170rpx 1fr 194rpx;
+  column-gap: 28rpx;
+  align-items: center;
+  min-height: 218rpx;
+  margin-top: 34rpx;
+  padding: 26rpx 28rpx;
+  border-radius: 28rpx;
+  background: rgba(255, 255, 255, 0.92);
+}
+
+.member-avatar {
+  width: 170rpx;
+  height: 170rpx;
+  border-radius: 24rpx;
+  background: #facc15;
+}
+
+.balance-label {
+  color: #111827;
+  font-size: 29rpx;
+  font-weight: 900;
+}
+
+.balance-value-row {
+  display: flex;
+  align-items: center;
+  margin-top: 18rpx;
+}
+
+.balance-value {
+  color: #f97316;
+  font-size: 74rpx;
+  font-weight: 900;
+  line-height: 1;
+}
+
+.balance-desc {
+  margin-top: 14rpx;
+  color: #374151;
+  font-size: 24rpx;
+  white-space: nowrap;
+}
+
+.tiny-help {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 26rpx;
+  height: 26rpx;
+  margin-left: 4rpx;
+  border: 2rpx solid #d1d5db;
+  border-radius: 50%;
+  color: #9ca3af;
+  font-size: 18rpx;
+  line-height: 1;
+}
+
+.member-status {
+  min-height: 142rpx;
+  padding-left: 28rpx;
+  border-left: 1rpx solid rgba(146, 64, 14, 0.12);
+}
+
+.status-label {
+  color: #6b7280;
+  font-size: 26rpx;
+}
+
+.status-name {
+  display: flex;
+  align-items: center;
+  margin-top: 18rpx;
+  color: #111827;
+  font-size: 28rpx;
+  font-weight: 800;
+}
+
+.section-head {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18rpx;
+  margin: 34rpx 4rpx 18rpx;
+}
+
+.section-title-wrap,
+.info-title-row {
+  display: flex;
+  align-items: center;
+  color: #111827;
+  font-size: 29rpx;
+  font-weight: 900;
+}
+
+.membership-section-title {
+  white-space: nowrap;
+}
+
+.section-note {
+  min-width: 0;
+  color: #6b7280;
+  font-size: 22rpx;
+  text-align: right;
+}
+
+.package-grid {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 22rpx;
+}
+
+.package-card {
+  position: relative;
+  min-height: 260rpx;
+  padding: 46rpx 24rpx 20rpx;
+  border: 3rpx solid transparent;
+  border-radius: 24rpx;
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 16rpx 38rpx rgba(146, 64, 14, 0.07);
+  overflow: hidden;
+}
+
+.package-active {
+  border-color: #fbbf24;
+  box-shadow: 0 18rpx 44rpx rgba(245, 158, 11, 0.22);
+}
+
+.package-badge {
+  position: absolute;
+  top: 0;
+  left: 0;
+  min-width: 116rpx;
+  height: 38rpx;
+  padding: 0 18rpx;
+  border-radius: 20rpx 0 20rpx 0;
+  color: #ffffff;
+  font-size: 21rpx;
+  font-weight: 900;
+  line-height: 38rpx;
+}
+
+.badge-yellow {
+  background: #fbbf24;
+}
+
+.badge-red {
+  background: #fb7185;
+}
+
+.badge-green {
+  background: #65a30d;
+}
+
+.badge-purple {
+  background: #a855f7;
+}
+
+.price-row {
+  display: flex;
+  align-items: baseline;
+  color: #f97316;
+  font-weight: 900;
+}
+
+.price-symbol {
+  margin-right: 8rpx;
+  font-size: 34rpx;
+}
+
+.price-value {
+  font-size: 60rpx;
+  line-height: 1;
+}
+
+.price-period {
+  margin-left: 8rpx;
+  color: #111827;
+  font-size: 25rpx;
+  font-weight: 800;
+}
+
+.points-row {
+  display: flex;
+  align-items: center;
+  gap: 10rpx;
+  margin-top: 18rpx;
+}
+
+.points-value {
+  color: #111827;
+  font-size: 36rpx;
+  font-weight: 900;
+}
+
+.points-label {
+  color: #111827;
+  font-size: 27rpx;
+  font-weight: 700;
+}
+
+.package-desc {
+  height: 42rpx;
+  margin-top: 12rpx;
+  color: #4b5563;
+  font-size: 22rpx;
+  line-height: 1.25;
+}
+
+.select-pill {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10rpx;
+  height: 50rpx;
+  margin-top: 18rpx;
+  border-radius: 999rpx;
+  background: #f8f3e8;
+  color: #374151;
+  font-size: 24rpx;
+  font-weight: 700;
+}
+
+.select-pill-active {
+  background: #fff2b6;
+  color: #78350f;
+}
+
+.select-dot {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24rpx;
+  height: 24rpx;
+  border: 3rpx solid #9ca3af;
+  border-radius: 50%;
+  color: #92400e;
+  font-size: 16rpx;
+  line-height: 1;
+}
+
+.select-pill-active .select-dot {
+  border-color: #92400e;
+}
+
+.info-card {
+  position: relative;
+  z-index: 2;
+  margin-top: 28rpx;
+  padding: 24rpx 22rpx;
+  border: 1rpx solid rgba(251, 191, 36, 0.26);
+  border-radius: 24rpx;
+  background: rgba(255, 255, 255, 0.92);
+}
+
+.rule-grid,
+.benefit-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  margin-top: 24rpx;
+}
+
+.rule-item,
+.benefit-item {
+  min-width: 0;
+  padding: 0 10rpx;
+  text-align: center;
+  border-right: 1rpx solid rgba(146, 64, 14, 0.12);
+}
+
+.rule-item:last-child,
+.benefit-item:last-child {
+  border-right: 0;
+}
+
+.rule-icon {
+  width: 68rpx;
+  height: 68rpx;
+  margin-bottom: 10rpx;
+}
+
+.rule-title,
+.rule-cost,
+.benefit-text {
+  color: #111827;
+  font-size: 22rpx;
+  line-height: 1.45;
+  white-space: pre-line;
+}
+
+.rule-cost {
+  margin-top: 4rpx;
+  font-weight: 800;
+}
+
+.benefit-card {
+  margin-top: 24rpx;
+}
+
+.benefit-icon {
+  width: 78rpx;
+  height: 78rpx;
+  margin-bottom: 10rpx;
+}
+
+.bottom-safe {
+  height: 48rpx;
+}
+
+.checkout-bar {
+  position: fixed;
+  left: 30rpx;
+  right: 30rpx;
+  bottom: 42rpx;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 22rpx;
+  min-height: 106rpx;
+  padding: 18rpx 18rpx 18rpx 34rpx;
+  border-radius: 28rpx;
+  background: rgba(255, 255, 255, 0.96);
+}
+
+.checkout-info {
+  min-width: 0;
+}
+
+.checkout-label {
+  color: #374151;
+  font-size: 22rpx;
+}
+
+.checkout-plan {
+  color: #1e3a8a;
+  font-size: 27rpx;
+  font-weight: 900;
+}
+
+.checkout-price {
+  display: flex;
+  align-items: center;
+  gap: 12rpx;
+  margin-top: 6rpx;
+  color: #f97316;
+  font-size: 28rpx;
+  font-weight: 900;
+}
+
+.checkout-divider {
+  color: #d1d5db;
+}
+
+.recharge-button {
+  flex: 0 0 auto;
+  width: 290rpx;
+  height: 74rpx;
+  border-radius: 999rpx;
+  color: #78350f;
+  font-size: 30rpx;
+  font-weight: 900;
+  line-height: 74rpx;
+}
+
+.footer-tip {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 8rpx;
+  z-index: 19;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #9ca3af;
+  font-size: 20rpx;
+}

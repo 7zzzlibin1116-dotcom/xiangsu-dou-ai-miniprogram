@@ -9,28 +9,28 @@
   </view>
 
   <view class="profile-card card-shadow">
-    <image class="avatar-image" src="/assets/profile/avatar-pixel.png" mode="aspectFill"></image>
+    <image class="avatar-image" src="{{avatarUrl}}" mode="aspectFill"></image>
     <view class="profile-main">
       <view class="nickname-row">
-        <view class="nickname">微信用户</view>
-        <view class="edit-icon">✎</view>
+        <view class="nickname">{{nickName}}</view>
       </view>
-      <view class="profile-desc">欢迎使用像素豆 AI</view>
+      <view class="profile-desc">{{loggedIn ? '欢迎使用像素豆 AI' : '登录后同步创作记录和次数'}}</view>
       <view class="member-row">
         <view class="member-badge">
           <text class="member-crown">♛</text>
-          <text>普通会员</text>
+          <text>{{memberLevel}}</text>
         </view>
-        <view class="upgrade-link" bindtap="handleMenuTap" data-title="我的会员">去升级 ›</view>
+        <button wx:if="{{!loggedIn}}" class="login-button" bindtap="handleLogin">微信登录</button>
+        <view wx:else class="upgrade-link" bindtap="goMembership">会员充值 ›</view>
       </view>
     </view>
   </view>
 
   <view class="stats-row">
     <view class="stat-card card-shadow">
-      <image class="stat-icon" src="/assets/common/magic-generate.png" mode="aspectFit"></image>
-      <view class="stat-value">{{todayLeft}}</view>
-      <view class="stat-label">今日剩余次数 <text class="stat-help">?</text></view>
+      <image class="stat-icon" src="/assets/membership/benefit-coin.png" mode="aspectFit"></image>
+      <view class="stat-value">{{points}}</view>
+      <view class="stat-label">当前积分</view>
     </view>
     <view class="stat-card card-shadow">
       <image class="stat-icon" src="/assets/common/success.png" mode="aspectFit"></image>
@@ -40,14 +40,14 @@
   </view>
 
   <view class="menu-card card-shadow">
-    <view class="menu-item" bindtap="handleMenuTap" data-title="我的会员">
+    <view class="menu-item" bindtap="goMembership">
       <view class="menu-left">
         <image class="menu-icon" src="/assets/common/vip.png" mode="aspectFit"></image>
-        <view class="menu-title">我的会员</view>
+        <view class="menu-title">会员充值</view>
       </view>
       <view class="menu-arrow">›</view>
     </view>
-    <view class="menu-item" bindtap="handleMenuTap" data-title="我的收藏">
+    <view class="menu-item" bindtap="goFavorites">
       <view class="menu-left">
         <image class="menu-icon" src="/assets/common/favorite.png" mode="aspectFit"></image>
         <view class="menu-title">我的收藏</view>

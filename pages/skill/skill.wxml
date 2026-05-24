@@ -12,7 +12,13 @@
     </view>
   </view>
 
-  <view wx:if="{{isMarketingFormSkill}}" class="form-card card-shadow">
+  <view wx:if="{{isUnavailableSkill}}" class="form-card card-shadow unavailable-card">
+    <view class="unavailable-icon">!</view>
+    <view class="unavailable-title">暂未开放</view>
+    <view class="unavailable-desc">这个 Skill 正在打磨中，开放后就可以直接使用。</view>
+  </view>
+
+  <view wx:elif="{{isMarketingFormSkill}}" class="form-card card-shadow">
     <view class="field-block">
       <view class="field-label">一. 上传视觉素材</view>
       <button class="upload-box {{uploadedImage ? 'upload-box-filled' : ''}}" bindtap="handleChooseImage">
@@ -25,8 +31,32 @@
     </view>
 
     <view class="field-block">
+      <view class="field-label">二. 选择生成图片比例</view>
+      <view class="ratio-grid">
+        <view
+          wx:for="{{imageRatios}}"
+          wx:key="*this"
+          class="ratio-chip {{selectedImageRatio === item ? 'ratio-chip-active' : ''}}"
+          data-ratio="{{item}}"
+          bindtap="handleRatioSelect"
+        >
+          {{item}}
+        </view>
+      </view>
+      <input
+        wx:if="{{marketingForm.noteStyle === '自定义'}}"
+        class="custom-style-input"
+        value="{{marketingForm.customStyle}}"
+        data-field="customStyle"
+        placeholder="{{customStylePlaceholder}}"
+        placeholder-class="input-placeholder"
+        bindinput="handleMarketingInput"
+      />
+    </view>
+
+    <view class="field-block">
       <view class="field-line">
-        <view class="field-label field-label-inline">二. 门店信息</view>
+        <view class="field-label field-label-inline">三. 门店信息</view>
         <button class="fill-last-button" bindtap="handleFillLastMarketing">一键填入上次内容</button>
       </view>
       <view class="store-form">
@@ -54,7 +84,7 @@
     </view>
 
     <view class="field-block">
-      <view class="field-label">三. 选择{{marketingStyleLabel}}</view>
+      <view class="field-label">四. 选择{{marketingStyleLabel}}</view>
       <view class="style-grid">
         <view
           wx:for="{{noteStyles}}"
@@ -78,7 +108,7 @@
     </view>
 
     <view class="field-block">
-      <view class="field-label">四. 补充核心卖点</view>
+      <view class="field-label">五. 补充核心卖点</view>
       <textarea
         class="prompt-input"
         maxlength="500"
@@ -100,16 +130,660 @@
     </view>
   </view>
 
-  <view wx:else class="form-card card-shadow">
-    <view wx:if="{{isTemplateSimilar}}" class="template-preview">
-      <view class="template-preview-image">
-        <view class="template-preview-block"></view>
-        <view class="template-preview-line template-preview-line-1"></view>
-        <view class="template-preview-line template-preview-line-2"></view>
+  <view wx:elif="{{isHolidayCampaign}}" class="form-card card-shadow">
+    <view class="field-block">
+      <view class="field-label">一. 填写节日营销信息</view>
+      <view class="store-form">
+        <view class="store-field">
+          <view class="store-label">1. 行业：</view>
+          <input class="store-input" value="{{marketingForm.industry}}" data-field="industry" placeholder="请输入行业" placeholder-class="input-placeholder" bindinput="handleMarketingInput" />
+        </view>
+        <view class="store-field">
+          <view class="store-label">2. 品类：</view>
+          <input class="store-input" value="{{marketingForm.category}}" data-field="category" placeholder="请输入品类" placeholder-class="input-placeholder" bindinput="handleMarketingInput" />
+        </view>
+        <view class="store-field">
+          <view class="store-label">3. 品牌名称：</view>
+          <input class="store-input" value="{{marketingForm.brandName}}" data-field="brandName" placeholder="请输入品牌名称" placeholder-class="input-placeholder" bindinput="handleMarketingInput" />
+        </view>
+        <view class="store-field">
+          <view class="store-label">4. 节日：</view>
+          <input class="store-input" value="{{marketingForm.festival}}" data-field="festival" placeholder="例如：端午节、七夕、国庆" placeholder-class="input-placeholder" bindinput="handleMarketingInput" />
+        </view>
       </view>
-      <view class="template-preview-text">当前模板：{{template.title}}</view>
     </view>
 
+    <view class="field-block">
+      <view class="field-label">二. 补充需求</view>
+      <textarea
+        class="prompt-input"
+        maxlength="500"
+        value="{{prompt}}"
+        placeholder="例如：活动预算、套餐价格、目标客群、门店特色"
+        placeholder-class="input-placeholder"
+        bindinput="handlePromptInput"
+      ></textarea>
+      <view class="input-count">{{prompt.length}}/500</view>
+    </view>
+
+    <view
+      class="generate-button {{generating ? 'generate-button-disabled' : ''}}"
+      bindtap="handleGenerate"
+    >
+      <image class="button-icon" src="/assets/common/magic-generate.png" mode="aspectFit"></image>
+      <text>{{generating ? '生成中...' : '立即生成'}}</text>
+    </view>
+  </view>
+
+  <view wx:elif="{{isHotspotTracker}}" class="form-card card-shadow">
+    <view class="field-block">
+      <view class="field-label">一. 选择行业与品类</view>
+      <view class="store-form">
+        <view class="store-field">
+          <view class="store-label">1. 行业：</view>
+          <input class="store-input" value="{{marketingForm.industry}}" data-field="industry" placeholder="请输入行业" placeholder-class="input-placeholder" bindinput="handleMarketingInput" />
+        </view>
+        <view class="store-field">
+          <view class="store-label">2. 品类：</view>
+          <input class="store-input" value="{{marketingForm.category}}" data-field="category" placeholder="请输入品类" placeholder-class="input-placeholder" bindinput="handleMarketingInput" />
+        </view>
+      </view>
+    </view>
+
+    <view class="field-block">
+      <view class="field-label">二. 补充需求</view>
+      <textarea
+        class="prompt-input"
+        maxlength="500"
+        value="{{prompt}}"
+        placeholder="例如：帮我找近期适合做小红书/朋友圈内容的热点角度"
+        placeholder-class="input-placeholder"
+        bindinput="handlePromptInput"
+      ></textarea>
+      <view class="input-count">{{prompt.length}}/500</view>
+    </view>
+
+    <view
+      class="generate-button {{generating ? 'generate-button-disabled' : ''}}"
+      bindtap="handleGenerate"
+    >
+      <image class="button-icon" src="/assets/common/magic-generate.png" mode="aspectFit"></image>
+      <text>{{generating ? '生成中...' : '立即生成'}}</text>
+    </view>
+  </view>
+
+  <view wx:elif="{{isCommunityBroadcast}}" class="form-card card-shadow">
+    <view class="field-block">
+      <view class="field-label">一. 品牌名称</view>
+      <view class="store-form">
+        <view class="store-field">
+          <view class="store-label">品牌名称：</view>
+          <input class="store-input" value="{{marketingForm.brandName}}" data-field="brandName" placeholder="请输入品牌名称" placeholder-class="input-placeholder" bindinput="handleMarketingInput" />
+        </view>
+      </view>
+    </view>
+
+    <view class="field-block">
+      <view class="field-label">二. 选择群发风格</view>
+      <view class="style-grid">
+        <view
+          wx:for="{{noteStyles}}"
+          wx:key="*this"
+          class="style-chip {{marketingForm.noteStyle === item ? 'style-chip-active' : ''}}"
+          data-style="{{item}}"
+          bindtap="handleStyleSelect"
+        >
+          {{item}}
+        </view>
+      </view>
+    </view>
+
+    <view class="field-block">
+      <view class="field-label">三. 补充需求</view>
+      <textarea
+        class="prompt-input"
+        maxlength="500"
+        value="{{prompt}}"
+        placeholder="例如：活动内容、福利规则、发送对象、语气要求"
+        placeholder-class="input-placeholder"
+        bindinput="handlePromptInput"
+      ></textarea>
+      <view class="input-count">{{prompt.length}}/500</view>
+    </view>
+
+    <view
+      class="generate-button {{generating ? 'generate-button-disabled' : ''}}"
+      bindtap="handleGenerate"
+    >
+      <image class="button-icon" src="/assets/common/magic-generate.png" mode="aspectFit"></image>
+      <text>{{generating ? '生成中...' : '立即生成'}}</text>
+    </view>
+  </view>
+
+  <view wx:elif="{{isTravelPlan}}" class="form-card card-shadow">
+    <view class="field-block">
+      <view class="field-label">一. 填写旅行信息</view>
+      <view class="store-form">
+        <view class="store-field">
+          <view class="store-label">1. 目的地：</view>
+          <input class="store-input" value="{{travelForm.destination}}" data-field="destination" placeholder="请输入目的地" placeholder-class="input-placeholder" bindinput="handleTravelInput" />
+        </view>
+        <view class="store-field">
+          <view class="store-label">2. 出发地：</view>
+          <input class="store-input" value="{{travelForm.departure}}" data-field="departure" placeholder="请输入出发地" placeholder-class="input-placeholder" bindinput="handleTravelInput" />
+        </view>
+        <view class="store-field">
+          <view class="store-label">3. 旅行天数：</view>
+          <input class="store-input" value="{{travelForm.days}}" data-field="days" placeholder="例如：3天2晚" placeholder-class="input-placeholder" bindinput="handleTravelInput" />
+        </view>
+        <view class="store-field">
+          <view class="store-label">4. 预算：</view>
+          <input class="store-input" value="{{travelForm.budget}}" data-field="budget" placeholder="例如：3000元/人" placeholder-class="input-placeholder" bindinput="handleTravelInput" />
+        </view>
+        <view class="store-field">
+          <view class="store-label">5. 同行人群：</view>
+          <input class="store-input" value="{{travelForm.companions}}" data-field="companions" placeholder="例如：情侣、亲子、朋友" placeholder-class="input-placeholder" bindinput="handleTravelInput" />
+        </view>
+      </view>
+    </view>
+
+    <view class="field-block">
+      <view class="field-label">二. 选择旅行风格</view>
+      <view class="style-grid">
+        <view
+          wx:for="{{travelStyles}}"
+          wx:key="*this"
+          class="style-chip {{travelForm.style === item ? 'style-chip-active' : ''}}"
+          data-style="{{item}}"
+          bindtap="handleTravelStyleSelect"
+        >
+          {{item}}
+        </view>
+      </view>
+      <input
+        wx:if="{{travelForm.style === '自定义'}}"
+        class="custom-style-input"
+        value="{{travelForm.customStyle}}"
+        data-field="customStyle"
+        placeholder="请输入自定义旅行风格"
+        placeholder-class="input-placeholder"
+        bindinput="handleTravelInput"
+      />
+    </view>
+
+    <view class="field-block">
+      <view class="field-label">三. 补充需求</view>
+      <textarea
+        class="prompt-input"
+        maxlength="500"
+        value="{{prompt}}"
+        placeholder="例如：不想太累、想住市中心、需要避开人多景点"
+        placeholder-class="input-placeholder"
+        bindinput="handlePromptInput"
+      ></textarea>
+      <view class="input-count">{{prompt.length}}/500</view>
+    </view>
+
+    <view
+      class="generate-button {{generating ? 'generate-button-disabled' : ''}}"
+      bindtap="handleGenerate"
+    >
+      <image class="button-icon" src="/assets/common/magic-generate.png" mode="aspectFit"></image>
+      <text>{{generating ? '生成中...' : '立即生成'}}</text>
+    </view>
+  </view>
+
+  <view wx:elif="{{isRecipeHelper}}" class="form-card card-shadow">
+    <view class="field-block">
+      <view class="field-label">一. 现有食材</view>
+      <view class="store-form">
+        <view class="store-field">
+          <view class="store-label">1. 肉类：</view>
+          <input class="store-input" value="{{recipeForm.meat}}" data-field="meat" placeholder="例如：鸡胸肉、牛肉、虾" placeholder-class="input-placeholder" bindinput="handleRecipeInput" />
+        </view>
+        <view class="store-field">
+          <view class="store-label">2. 蔬菜：</view>
+          <input class="store-input" value="{{recipeForm.vegetables}}" data-field="vegetables" placeholder="例如：番茄、土豆、青菜" placeholder-class="input-placeholder" bindinput="handleRecipeInput" />
+        </view>
+        <view class="store-field">
+          <view class="store-label">3. 蛋奶：</view>
+          <input class="store-input" value="{{recipeForm.eggDairy}}" data-field="eggDairy" placeholder="例如：鸡蛋、牛奶、芝士" placeholder-class="input-placeholder" bindinput="handleRecipeInput" />
+        </view>
+        <view class="store-field">
+          <view class="store-label">4. 主食：</view>
+          <input class="store-input" value="{{recipeForm.staple}}" data-field="staple" placeholder="例如：米饭、面条、馒头" placeholder-class="input-placeholder" bindinput="handleRecipeInput" />
+        </view>
+      </view>
+    </view>
+
+    <view class="field-block">
+      <view class="field-label">二. 用餐信息</view>
+      <view class="store-form">
+        <view class="store-field">
+          <view class="store-label">1. 几个人吃：</view>
+          <input class="store-input" value="{{recipeForm.people}}" data-field="people" placeholder="例如：2人" placeholder-class="input-placeholder" bindinput="handleRecipeInput" />
+        </view>
+        <view class="store-field">
+          <view class="store-label">2. 做几道菜：</view>
+          <input class="store-input" value="{{recipeForm.dishes}}" data-field="dishes" placeholder="例如：3道菜" placeholder-class="input-placeholder" bindinput="handleRecipeInput" />
+        </view>
+        <view class="store-field">
+          <view class="store-label">3. 做饭时间：</view>
+          <input class="store-input" value="{{recipeForm.cookingTime}}" data-field="cookingTime" placeholder="例如：30分钟内" placeholder-class="input-placeholder" bindinput="handleRecipeInput" />
+        </view>
+        <view class="store-field">
+          <view class="store-label">4. 口味偏好：</view>
+          <input class="store-input" value="{{recipeForm.taste}}" data-field="taste" placeholder="例如：清淡、微辣、下饭" placeholder-class="input-placeholder" bindinput="handleRecipeInput" />
+        </view>
+        <view class="store-field">
+          <view class="store-label">5. 厨房工具：</view>
+          <input class="store-input" value="{{recipeForm.tools}}" data-field="tools" placeholder="例如：空气炸锅、电饭煲、炒锅" placeholder-class="input-placeholder" bindinput="handleRecipeInput" />
+        </view>
+        <view class="store-field">
+          <view class="store-label">6. 忌口：</view>
+          <input class="store-input" value="{{recipeForm.taboo}}" data-field="taboo" placeholder="例如：不吃香菜、少油、过敏" placeholder-class="input-placeholder" bindinput="handleRecipeInput" />
+        </view>
+      </view>
+    </view>
+
+    <view class="field-block">
+      <view class="field-label">三. 补充需求</view>
+      <textarea
+        class="prompt-input"
+        maxlength="500"
+        value="{{prompt}}"
+        placeholder="例如：想要适合带饭、低脂、高蛋白、孩子爱吃"
+        placeholder-class="input-placeholder"
+        bindinput="handlePromptInput"
+      ></textarea>
+      <view class="input-count">{{prompt.length}}/500</view>
+    </view>
+
+    <view
+      class="generate-button {{generating ? 'generate-button-disabled' : ''}}"
+      bindtap="handleGenerate"
+    >
+      <image class="button-icon" src="/assets/common/magic-generate.png" mode="aspectFit"></image>
+      <text>{{generating ? '生成中...' : '立即生成'}}</text>
+    </view>
+  </view>
+
+  <view wx:elif="{{isHighEqReply}}" class="form-card card-shadow">
+    <view class="field-block">
+      <view class="field-label">一. 选择回复场景</view>
+      <view class="style-grid">
+        <view
+          wx:for="{{highEqScenarios}}"
+          wx:key="*this"
+          class="style-chip high-eq-chip {{highEqForm.scenario === item ? 'style-chip-active' : ''}}"
+          data-scenario="{{item}}"
+          bindtap="handleHighEqScenarioSelect"
+        >
+          {{item}}
+        </view>
+      </view>
+    </view>
+
+    <view class="field-block">
+      <view class="field-label">二. 对方消息</view>
+      <textarea
+        class="prompt-input"
+        maxlength="500"
+        value="{{highEqForm.message}}"
+        data-field="message"
+        placeholder="粘贴对方发来的消息，或描述当前情况"
+        placeholder-class="input-placeholder"
+        bindinput="handleHighEqInput"
+      ></textarea>
+      <view class="input-count">{{highEqForm.message.length}}/500</view>
+    </view>
+
+    <view class="field-block">
+      <view class="field-label">三. 补充要求</view>
+      <textarea
+        class="prompt-input"
+        maxlength="500"
+        value="{{prompt}}"
+        placeholder="例如：语气委婉一点、简短一点、带一点幽默感"
+        placeholder-class="input-placeholder"
+        bindinput="handlePromptInput"
+      ></textarea>
+      <view class="input-count">{{prompt.length}}/500</view>
+    </view>
+
+    <view
+      class="generate-button {{generating ? 'generate-button-disabled' : ''}}"
+      bindtap="handleGenerate"
+    >
+      <image class="button-icon" src="/assets/common/magic-generate.png" mode="aspectFit"></image>
+      <text>{{generating ? '生成中...' : '立即生成'}}</text>
+    </view>
+  </view>
+
+  <view wx:elif="{{isTryOn}}" class="form-card card-shadow">
+    <view class="field-block">
+      <view class="field-label">一. 上传衣服照片</view>
+      <button class="upload-box {{tryOnImages.clothing ? 'upload-box-filled' : ''}}" data-field="clothing" bindtap="handleChooseTryOnImage">
+        <image wx:if="{{tryOnImages.clothing}}" class="uploaded-image" src="{{tryOnImages.clothing}}" mode="aspectFill"></image>
+        <view wx:else class="upload-placeholder">
+          <image class="upload-icon" src="/assets/common/upload.png" mode="aspectFit"></image>
+          <view class="upload-text">上传衣服照片</view>
+        </view>
+      </button>
+    </view>
+
+    <view class="field-block">
+      <view class="field-label">二. 上传本人照片</view>
+      <button class="upload-box {{tryOnImages.person ? 'upload-box-filled' : ''}}" data-field="person" bindtap="handleChooseTryOnImage">
+        <image wx:if="{{tryOnImages.person}}" class="uploaded-image" src="{{tryOnImages.person}}" mode="aspectFill"></image>
+        <view wx:else class="upload-placeholder">
+          <image class="upload-icon" src="/assets/common/upload.png" mode="aspectFit"></image>
+          <view class="upload-text">上传本人照片</view>
+        </view>
+      </button>
+    </view>
+
+    <view class="field-block">
+      <view class="field-label">三. 补充需求</view>
+      <textarea
+        class="prompt-input"
+        maxlength="500"
+        value="{{prompt}}"
+        placeholder="例如：保留原衣服颜色、真人自然试穿、背景干净"
+        placeholder-class="input-placeholder"
+        bindinput="handlePromptInput"
+      ></textarea>
+      <view class="input-count">{{prompt.length}}/500</view>
+    </view>
+
+    <view
+      class="generate-button {{generating ? 'generate-button-disabled' : ''}}"
+      bindtap="handleGenerate"
+    >
+      <image class="button-icon" src="/assets/common/magic-generate.png" mode="aspectFit"></image>
+      <text>{{generating ? '生成中...' : '立即生成'}}</text>
+    </view>
+  </view>
+
+  <view wx:elif="{{isIdPhoto}}" class="form-card card-shadow">
+    <view class="field-block">
+      <view class="field-label">一. 上传人像照片</view>
+      <button class="upload-box {{uploadedImage ? 'upload-box-filled' : ''}}" bindtap="handleChooseImage">
+        <image wx:if="{{uploadedImage}}" class="uploaded-image" src="{{uploadedImage}}" mode="aspectFill"></image>
+        <view wx:else class="upload-placeholder">
+          <image class="upload-icon" src="/assets/common/upload.png" mode="aspectFit"></image>
+          <view class="upload-text">上传正面照片</view>
+        </view>
+      </button>
+    </view>
+
+    <view class="field-block">
+      <view class="field-label">二. 选择证件照类型</view>
+      <view class="style-grid">
+        <view
+          wx:for="{{idPhotoOptions}}"
+          wx:key="*this"
+          class="style-chip {{idPhotoForm.option === item ? 'style-chip-active' : ''}}"
+          data-option="{{item}}"
+          bindtap="handleIdPhotoOptionSelect"
+        >
+          {{item}}
+        </view>
+      </view>
+    </view>
+
+    <view class="field-block">
+      <view class="field-label">三. 补充需求</view>
+      <textarea
+        class="prompt-input"
+        maxlength="500"
+        value="{{prompt}}"
+        placeholder="例如：保持自然、不要过度美颜、衣服正式一点"
+        placeholder-class="input-placeholder"
+        bindinput="handlePromptInput"
+      ></textarea>
+      <view class="input-count">{{prompt.length}}/500</view>
+    </view>
+
+    <view
+      class="generate-button {{generating ? 'generate-button-disabled' : ''}}"
+      bindtap="handleGenerate"
+    >
+      <image class="button-icon" src="/assets/common/magic-generate.png" mode="aspectFit"></image>
+      <text>{{generating ? '生成中...' : '立即生成'}}</text>
+    </view>
+  </view>
+
+  <view wx:elif="{{isResumePolish}}" class="form-card card-shadow">
+    <view class="field-block">
+      <view class="field-label">优化一段经历</view>
+      <view class="field-hint">把普通描述改成更适合写进简历的表达</view>
+    </view>
+
+    <view class="field-block">
+      <view class="field-label">一. 原始经历</view>
+      <textarea
+        class="prompt-input"
+        maxlength="500"
+        value="{{resumeForm.experience}}"
+        data-field="experience"
+        placeholder="比如：我负责门店小红书运营，平时写笔记、拍图、发朋友圈，也做一些活动。"
+        placeholder-class="input-placeholder"
+        bindinput="handleResumeInput"
+      ></textarea>
+      <view class="input-count">{{resumeForm.experience.length}}/500</view>
+    </view>
+
+    <view class="field-block">
+      <view class="field-label">二. 目标岗位</view>
+      <textarea
+        class="prompt-input prompt-input-small"
+        maxlength="120"
+        value="{{resumeForm.targetRole}}"
+        data-field="targetRole"
+        placeholder="比如：新媒体运营、市场营销、销售、产品经理"
+        placeholder-class="input-placeholder"
+        bindinput="handleResumeInput"
+      ></textarea>
+      <view class="input-count">{{resumeForm.targetRole.length}}/120</view>
+    </view>
+
+    <view class="field-block">
+      <view class="field-label">三. 选择优化方向</view>
+      <view class="style-grid">
+        <view
+          wx:for="{{resumeDirections}}"
+          wx:key="*this"
+          class="style-chip {{resumeForm.direction === item ? 'style-chip-active' : ''}}"
+          data-direction="{{item}}"
+          bindtap="handleResumeDirectionSelect"
+        >
+          {{item}}
+        </view>
+      </view>
+    </view>
+
+    <view
+      class="generate-button {{generating ? 'generate-button-disabled' : ''}}"
+      bindtap="handleGenerate"
+    >
+      <image class="button-icon" src="/assets/common/magic-generate.png" mode="aspectFit"></image>
+      <text>{{generating ? '生成中...' : '立即生成'}}</text>
+    </view>
+  </view>
+
+  <view wx:elif="{{isSellingPoints}}" class="form-card card-shadow">
+    <view class="field-block">
+      <view class="field-label">一. 产品名称</view>
+      <view class="store-form">
+        <view class="store-field">
+          <view class="store-label">产品名称：</view>
+          <input class="store-input" value="{{productForm.name}}" data-field="name" placeholder="比如：低脂鸡胸肉、日式烧鸟套餐、AI修图小程序、补水面膜、儿童学习台灯" placeholder-class="input-placeholder" bindinput="handleProductInput" />
+        </view>
+      </view>
+    </view>
+
+    <view class="field-block">
+      <view class="field-label">二. 产品类型</view>
+      <view class="style-grid">
+        <view
+          wx:for="{{productTypes}}"
+          wx:key="*this"
+          class="style-chip {{productForm.type === item ? 'style-chip-active' : ''}}"
+          data-type="{{item}}"
+          bindtap="handleProductTypeSelect"
+        >
+          {{item}}
+        </view>
+      </view>
+      <input
+        wx:if="{{productForm.type === '其他'}}"
+        class="custom-style-input"
+        value="{{productForm.customType}}"
+        data-field="customType"
+        placeholder="请输入产品类型"
+        placeholder-class="input-placeholder"
+        bindinput="handleProductInput"
+      />
+    </view>
+
+    <view class="field-block">
+      <view class="field-label">三. 产品基础介绍</view>
+      <textarea
+        class="prompt-input"
+        maxlength="500"
+        value="{{productForm.intro}}"
+        data-field="intro"
+        placeholder="请简单介绍一下这个产品，比如它是什么、有什么特点、适合谁用。"
+        placeholder-class="input-placeholder"
+        bindinput="handleProductInput"
+      ></textarea>
+      <view class="input-count">{{productForm.intro.length}}/500</view>
+    </view>
+
+    <view class="field-block">
+      <view class="field-label">四. 产品价格 / 价格区间</view>
+      <view class="store-form">
+        <view class="store-field">
+          <view class="store-label">价格：</view>
+          <input class="store-input" value="{{productForm.price}}" data-field="price" placeholder="比如：39元/月、99元/份、199元套餐、客单价80元左右" placeholder-class="input-placeholder" bindinput="handleProductInput" />
+        </view>
+      </view>
+    </view>
+
+    <view class="field-block">
+      <view class="field-label">五. 产品图片 / 包装图 / 详情页图</view>
+      <button class="upload-box {{uploadedImage ? 'upload-box-filled' : ''}}" bindtap="handleChooseImage">
+        <image wx:if="{{uploadedImage}}" class="uploaded-image" src="{{uploadedImage}}" mode="aspectFill"></image>
+        <view wx:else class="upload-placeholder">
+          <image class="upload-icon" src="/assets/common/upload.png" mode="aspectFit"></image>
+          <view class="upload-text">上传产品图/菜品图/门店图</view>
+        </view>
+      </button>
+    </view>
+
+    <view class="field-block">
+      <view class="field-label">六. 补充需求</view>
+      <textarea
+        class="prompt-input"
+        maxlength="500"
+        value="{{prompt}}"
+        placeholder="例如：希望突出性价比、品质感、低门槛体验或专业感"
+        placeholder-class="input-placeholder"
+        bindinput="handlePromptInput"
+      ></textarea>
+      <view class="input-count">{{prompt.length}}/500</view>
+    </view>
+
+    <view
+      class="generate-button {{generating ? 'generate-button-disabled' : ''}}"
+      bindtap="handleGenerate"
+    >
+      <image class="button-icon" src="/assets/common/magic-generate.png" mode="aspectFit"></image>
+      <text>{{generating ? '生成中...' : '立即生成'}}</text>
+    </view>
+  </view>
+
+  <view wx:elif="{{isOldPhotoRestore}}" class="form-card card-shadow">
+    <view class="field-block">
+      <view class="field-label">第一步：上传照片</view>
+      <button class="upload-box {{uploadedImage ? 'upload-box-filled' : ''}}" bindtap="handleChooseImage">
+        <image wx:if="{{uploadedImage}}" class="uploaded-image" src="{{uploadedImage}}" mode="aspectFill"></image>
+        <view wx:else class="upload-placeholder">
+          <image class="upload-icon" src="/assets/common/upload.png" mode="aspectFit"></image>
+          <view class="upload-text">上传老照片</view>
+        </view>
+      </button>
+    </view>
+
+    <view class="field-block">
+      <view class="field-label">第二步：选择修复需求</view>
+      <view class="style-grid">
+        <view
+          wx:for="{{oldPhotoNeeds}}"
+          wx:key="*this"
+          class="style-chip {{oldPhotoForm.needs.indexOf(item) > -1 ? 'style-chip-active' : ''}}"
+          data-need="{{item}}"
+          bindtap="handleOldPhotoNeedToggle"
+        >
+          {{item}}
+        </view>
+      </view>
+    </view>
+
+    <view class="field-block">
+      <view class="field-label">第三步：选择修复程度</view>
+      <view class="ratio-grid">
+        <view
+          wx:for="{{oldPhotoLevels}}"
+          wx:key="*this"
+          class="ratio-chip {{oldPhotoForm.level === item ? 'ratio-chip-active' : ''}}"
+          data-level="{{item}}"
+          bindtap="handleOldPhotoLevelSelect"
+        >
+          {{item}}
+        </view>
+      </view>
+    </view>
+
+    <view class="field-block">
+      <view class="field-label">第四步：选择是否保持原貌</view>
+      <view class="ratio-grid">
+        <view
+          wx:for="{{oldPhotoLooks}}"
+          wx:key="*this"
+          class="ratio-chip {{oldPhotoForm.look === item ? 'ratio-chip-active' : ''}}"
+          data-look="{{item}}"
+          bindtap="handleOldPhotoLookSelect"
+        >
+          {{item}}
+        </view>
+      </view>
+    </view>
+
+    <view class="field-block">
+      <view class="field-label">补充需求</view>
+      <textarea
+        class="prompt-input"
+        maxlength="500"
+        value="{{prompt}}"
+        placeholder="例如：脸部更清晰、背景保留、不要改变人物五官"
+        placeholder-class="input-placeholder"
+        bindinput="handlePromptInput"
+      ></textarea>
+      <view class="input-count">{{prompt.length}}/500</view>
+    </view>
+
+    <view
+      class="generate-button {{generating ? 'generate-button-disabled' : ''}}"
+      bindtap="handleGenerate"
+    >
+      <image class="button-icon" src="/assets/common/magic-generate.png" mode="aspectFit"></image>
+      <text>{{generating ? '生成中...' : '立即生成'}}</text>
+    </view>
+  </view>
+
+  <view wx:else class="form-card card-shadow">
     <view wx:if="{{isImageSkill}}" class="field-block">
       <view class="field-label">{{isTemplateSimilar ? '上传图片' : (skill.uploadLabel || '参考图片')}}</view>
       <button class="upload-box {{uploadedImage ? 'upload-box-filled' : ''}}" bindtap="handleChooseImage">
@@ -121,7 +795,40 @@
       </button>
     </view>
 
+    <view wx:if="{{isTemplateSimilar}}" class="field-block">
+      <view class="field-label">选择生成图片比例</view>
+      <view class="ratio-grid">
+        <view
+          wx:for="{{imageRatios}}"
+          wx:key="*this"
+          class="ratio-chip {{selectedImageRatio === item ? 'ratio-chip-active' : ''}}"
+          data-ratio="{{item}}"
+          bindtap="handleRatioSelect"
+        >
+          {{item}}
+        </view>
+      </view>
+    </view>
+
     <view wx:if="{{!isTemplateSimilar}}" class="field-block">
+      <view wx:if="{{isDianpingImage}}" class="dianping-category-block">
+        <view class="field-label">商家信息</view>
+        <view class="store-form">
+          <view class="store-field">
+            <view class="store-label">1. 行业：</view>
+            <input class="store-input" value="{{marketingForm.industry}}" data-field="industry" placeholder="请输入行业" placeholder-class="input-placeholder" bindinput="handleMarketingInput" />
+          </view>
+          <view class="store-field">
+            <view class="store-label">2. 品类：</view>
+            <input class="store-input" value="{{marketingForm.category}}" data-field="category" placeholder="请输入品类" placeholder-class="input-placeholder" bindinput="handleMarketingInput" />
+          </view>
+          <view class="store-field">
+            <view class="store-label">3. 品牌名称：</view>
+            <input class="store-input" value="{{marketingForm.brandName}}" data-field="brandName" placeholder="请输入品牌名称" placeholder-class="input-placeholder" bindinput="handleMarketingInput" />
+          </view>
+        </view>
+      </view>
+
       <view wx:if="{{isDianpingImage}}" class="dianping-category-block">
         <view class="field-label">图片分类</view>
         <view class="style-grid">
@@ -131,6 +838,21 @@
             class="style-chip {{selectedDianpingCategory === item ? 'style-chip-active' : ''}}"
             data-category="{{item}}"
             bindtap="handleDianpingCategorySelect"
+          >
+            {{item}}
+          </view>
+        </view>
+      </view>
+
+      <view wx:if="{{isDianpingImage}}" class="dianping-category-block">
+        <view class="field-label">选择生成图片比例</view>
+        <view class="ratio-grid">
+          <view
+            wx:for="{{imageRatios}}"
+            wx:key="*this"
+            class="ratio-chip {{selectedImageRatio === item ? 'ratio-chip-active' : ''}}"
+            data-ratio="{{item}}"
+            bindtap="handleRatioSelect"
           >
             {{item}}
           </view>

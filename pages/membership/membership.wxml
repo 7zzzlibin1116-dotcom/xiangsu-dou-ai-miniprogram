@@ -1,0 +1,106 @@
+<view class="page membership-page">
+  <view class="top-bar">
+    <view class="back-hit" bindtap="goBack">返回</view>
+    <view class="record-entry" bindtap="showRechargeRecords">
+      <view class="record-text">充值记录</view>
+    </view>
+  </view>
+
+  <view class="hero-title-row">
+    <view class="hero-title">像素豆会员中心</view>
+  </view>
+  <view class="hero-subtitle">充值积分，解锁更多 AI 创作次数</view>
+
+  <view class="balance-card card-shadow">
+    <image class="member-avatar" src="{{avatarUrl}}" mode="aspectFill"></image>
+    <view class="balance-main">
+      <view class="balance-label">当前积分</view>
+      <view class="balance-value-row">
+        <text class="balance-value">{{points}}</text>
+      </view>
+      <view class="balance-desc">今日剩余次数：{{todayLeft}}次 <text class="tiny-help">?</text></view>
+    </view>
+    <view class="member-status">
+      <view class="status-label">会员状态</view>
+      <view class="status-name">
+        <text>{{memberLevel}}</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="section-head">
+    <view class="section-title-wrap">
+      <text class="membership-section-title">选择充值套餐</text>
+    </view>
+    <view class="section-note">积分可用于所有 AI 创作功能 <text class="tiny-help">?</text></view>
+  </view>
+
+  <view class="package-grid">
+    <view
+      class="package-card {{selectedId === item.id ? 'package-active' : ''}}"
+      wx:for="{{packages}}"
+      wx:key="id"
+      bindtap="selectPackage"
+      data-id="{{item.id}}"
+    >
+      <view class="package-badge {{item.badgeClass}}">{{item.badge}}</view>
+      <view class="price-row">
+        <text class="price-symbol">¥</text>
+        <text class="price-value">{{item.price}}</text>
+        <text class="price-period">/ {{item.period}}</text>
+      </view>
+      <view class="points-row">
+        <text class="points-value">{{item.points}}</text>
+        <text class="points-label">积分</text>
+      </view>
+      <view class="package-desc">{{item.desc}}</view>
+      <view class="select-pill {{selectedId === item.id ? 'select-pill-active' : ''}}">
+        <text class="select-dot">{{selectedId === item.id ? '✓' : ''}}</text>
+        <text>{{selectedId === item.id ? '已选择' : '选择此套餐'}}</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="info-card card-shadow">
+    <view class="info-title-row">
+      <text>积分消耗规则</text>
+    </view>
+    <view class="rule-grid">
+      <view class="rule-item" wx:for="{{rules}}" wx:key="title">
+        <image class="rule-icon" src="{{item.icon}}" mode="aspectFit"></image>
+        <view class="rule-title">{{item.title}}</view>
+        <view class="rule-cost">{{item.cost}}</view>
+      </view>
+    </view>
+  </view>
+
+  <view class="info-card benefit-card card-shadow">
+    <view class="info-title-row">
+      <text>会员权益</text>
+    </view>
+    <view class="benefit-grid">
+      <view class="benefit-item" wx:for="{{benefits}}" wx:key="text">
+        <image class="benefit-icon" src="{{item.icon}}" mode="aspectFit"></image>
+        <view class="benefit-text">{{item.text}}</view>
+      </view>
+    </view>
+  </view>
+
+  <view class="bottom-safe"></view>
+
+  <view class="checkout-bar card-shadow">
+    <view class="checkout-info">
+      <view class="checkout-label">已选：<text class="checkout-plan">{{selectedPackage.name}}</text></view>
+      <view class="checkout-price">
+        <text>¥{{selectedPackage.price}}</text>
+        <text class="checkout-divider">|</text>
+        <text>{{selectedPackage.points}} 积分</text>
+      </view>
+    </view>
+    <button class="recharge-button primary-gradient" bindtap="handleRecharge">立即充值</button>
+  </view>
+
+  <view class="footer-tip">
+    <text>积分仅限平台内使用，不可提现</text>
+  </view>
+</view>

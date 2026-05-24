@@ -44,6 +44,7 @@
 }
 
 .template-card {
+  position: relative;
   width: calc((100% - 24rpx) / 2);
   height: 470rpx;
   overflow: hidden;
@@ -133,17 +134,44 @@
   bottom: 40rpx;
 }
 
-.prototype-button {
+.prototype-actions {
   position: absolute;
   left: 28rpx;
   right: 28rpx;
   bottom: 26rpx;
+  display: flex;
+  gap: 14rpx;
+}
+
+.prototype-favorite,
+.prototype-button {
   height: 72rpx;
   border-radius: 18rpx;
-  background: rgba(55, 65, 81, 0.78);
-  color: #ffffff;
-  font-size: 28rpx;
+  background: rgba(255, 255, 255, 0.94);
+  color: #111827;
   font-weight: 800;
   line-height: 72rpx;
   text-align: center;
+  box-shadow: 0 10rpx 24rpx rgba(120, 53, 15, 0.1);
+}
+
+.prototype-favorite {
+  width: 72rpx;
+  flex: 0 0 72rpx;
+  background: rgba(255, 255, 255, 0.94);
+  color: #f59e0b;
+  font-size: 34rpx;
+}
+
+.prototype-favorite-active {
+  background: #ffffff;
+  color: #f59e0b;
+}
+
+.prototype-button {
+  min-width: 0;
+  flex: 1;
+  background: rgba(255, 255, 255, 0.94);
+  color: #111827;
+  font-size: 28rpx;
 }

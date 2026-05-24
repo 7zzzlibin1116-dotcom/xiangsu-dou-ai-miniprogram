@@ -1,10 +1,12 @@
 {
   "pages": [
     "pages/index/index",
-    "pages/skill/skill",
     "pages/records/records",
     "pages/inspiration/inspiration",
-    "pages/profile/profile"
+    "pages/profile/profile",
+    "pages/skill/skill",
+    "pages/membership/membership",
+    "pages/favorites/favorites"
   ],
   "window": {
     "navigationBarTitleText": "像素豆 AI",
@@ -45,5 +47,6 @@
     ]
   },
   "style": "v2",
+  "lazyCodeLoading": "requiredComponents",
   "sitemapLocation": "sitemap.json"
 }
