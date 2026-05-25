@@ -1,0 +1,51 @@
+<view class="page contact-page">
+  <view class="contact-hero card-shadow">
+    <image class="contact-hero-image" src="/assets/banner-feedback.jpg" mode="aspectFill"></image>
+  </view>
+
+  <view class="contact-card card-shadow">
+    <view class="contact-title">告诉我们你的想法</view>
+    <view class="contact-desc">哪里不好用、想增加什么工具、想要什么模板，都可以写在这里。</view>
+
+    <view class="field-block">
+      <view class="field-label">建议类型</view>
+      <view class="type-grid">
+        <view
+          wx:for="{{types}}"
+          wx:key="*this"
+          class="type-chip {{type === item ? 'type-chip-active' : ''}}"
+          data-type="{{item}}"
+          bindtap="handleTypeTap"
+        >
+          {{item}}
+        </view>
+      </view>
+    </view>
+
+    <view class="field-block">
+      <view class="field-label">具体内容</view>
+      <textarea
+        class="content-input"
+        maxlength="500"
+        value="{{content}}"
+        placeholder="比如：我想增加证件照工具、视频脚本生成、更多小红书模板..."
+        placeholder-class="input-placeholder"
+        bindinput="handleContentInput"
+      ></textarea>
+      <view class="input-count">{{content.length}}/500</view>
+    </view>
+
+    <view class="field-block">
+      <view class="field-label">联系方式</view>
+      <input
+        class="contact-input"
+        value="{{contact}}"
+        placeholder="微信号 / 手机号，可不填"
+        placeholder-class="input-placeholder"
+        bindinput="handleContactInput"
+      />
+    </view>
+
+    <button class="submit-button" bindtap="handleSubmit">提交建议</button>
+  </view>
+</view>

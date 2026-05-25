@@ -1,0 +1,128 @@
+.contact-page {
+  padding-top: 32rpx;
+  padding-bottom: 72rpx;
+}
+
+.contact-hero {
+  height: 244rpx;
+  overflow: hidden;
+  border-radius: 32rpx;
+  background: #ffd51a;
+}
+
+.contact-hero-image {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.contact-card {
+  margin-top: 28rpx;
+  padding: 34rpx 30rpx 32rpx;
+  border-radius: 30rpx;
+  background: #ffffff;
+}
+
+.contact-title {
+  color: #111827;
+  font-size: 38rpx;
+  font-weight: 900;
+  line-height: 1.2;
+}
+
+.contact-desc {
+  margin-top: 12rpx;
+  color: #6b7280;
+  font-size: 25rpx;
+  line-height: 1.45;
+}
+
+.field-block {
+  margin-top: 30rpx;
+}
+
+.field-label {
+  margin-bottom: 16rpx;
+  color: #111827;
+  font-size: 28rpx;
+  font-weight: 800;
+}
+
+.type-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  column-gap: 12rpx;
+  row-gap: 14rpx;
+}
+
+.type-chip {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 62rpx;
+  border-radius: 999rpx;
+  background: #fff7d6;
+  color: #78350f;
+  font-size: 23rpx;
+  font-weight: 800;
+}
+
+.type-chip-active {
+  background: #fef3c7;
+  box-shadow: inset 0 0 0 2rpx #facc15;
+}
+
+.type-chip:nth-child(5) {
+  grid-column: 2;
+}
+
+.content-input {
+  width: 100%;
+  min-height: 260rpx;
+  padding: 24rpx;
+  border-radius: 24rpx;
+  background: #fffaf0;
+  color: #111827;
+  font-size: 26rpx;
+  line-height: 1.45;
+}
+
+.contact-input {
+  width: 100%;
+  height: 82rpx;
+  padding: 0 24rpx;
+  border-radius: 22rpx;
+  background: #fffaf0;
+  color: #111827;
+  font-size: 26rpx;
+}
+
+.input-placeholder {
+  color: #9ca3af;
+}
+
+.input-count {
+  margin-top: 12rpx;
+  color: #9ca3af;
+  font-size: 22rpx;
+  text-align: right;
+}
+
+.submit-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 88rpx;
+  margin-top: 30rpx;
+  border-radius: 999rpx;
+  color: #78350f;
+  font-size: 30rpx;
+  font-weight: 900;
+  line-height: 1;
+}
+
+.submit-button {
+  background: linear-gradient(135deg, #fde047 0%, #facc15 100%);
+}

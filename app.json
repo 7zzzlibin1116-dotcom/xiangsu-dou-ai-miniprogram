@@ -4,6 +4,8 @@
     "pages/records/records",
     "pages/inspiration/inspiration",
     "pages/profile/profile",
+    "pages/contact/contact",
+    "pages/about/about",
     "pages/skill/skill",
     "pages/membership/membership",
     "pages/favorites/favorites"

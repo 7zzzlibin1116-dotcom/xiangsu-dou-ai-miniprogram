@@ -1,10 +1,6 @@
 page {
   min-height: 100vh;
   background-color: #fff7d7;
-  background-image: url("/assets/backgrounds/app-page-bg.png");
-  background-repeat: repeat-y;
-  background-position: top center;
-  background-size: 100% auto;
   color: #111827;
   font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif;
   box-sizing: border-box;
@@ -35,10 +31,6 @@ button::after {
   min-height: 100vh;
   padding: 28rpx 32rpx 48rpx;
   background-color: #fff7d7;
-  background-image: url("/assets/backgrounds/app-page-bg.png");
-  background-repeat: repeat-y;
-  background-position: top center;
-  background-size: 100% auto;
 }
 
 .section-title {

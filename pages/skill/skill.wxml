@@ -21,8 +21,11 @@
   <view wx:elif="{{isMarketingFormSkill}}" class="form-card card-shadow">
     <view class="field-block">
       <view class="field-label">一. 上传视觉素材</view>
-      <button class="upload-box {{uploadedImage ? 'upload-box-filled' : ''}}" bindtap="handleChooseImage">
-        <image wx:if="{{uploadedImage}}" class="uploaded-image" src="{{uploadedImage}}" mode="aspectFill"></image>
+      <button class="upload-box {{uploadedImages.length ? 'upload-box-filled' : ''}}" bindtap="handleChooseImage">
+        <view wx:if="{{uploadedImages.length}}" class="uploaded-grid">
+          <image wx:for="{{uploadedImages}}" wx:key="*this" class="uploaded-grid-image" src="{{item}}" mode="aspectFill"></image>
+          <view wx:if="{{uploadedImages.length < 9}}" class="uploaded-add">+</view>
+        </view>
         <view wx:else class="upload-placeholder">
           <image class="upload-icon" src="/assets/common/upload.png" mode="aspectFit"></image>
           <view class="upload-text">上传视觉素材</view>
@@ -56,28 +59,28 @@
 
     <view class="field-block">
       <view class="field-line">
-        <view class="field-label field-label-inline">三. 门店信息</view>
+        <view class="field-label field-label-inline">三. 门店信息 <text class="optional-text">选填</text></view>
         <button class="fill-last-button" bindtap="handleFillLastMarketing">一键填入上次内容</button>
       </view>
       <view class="store-form">
         <view class="store-field">
-          <view class="store-label">1. 城市：</view>
+          <view class="store-label">1. 城市<text class="store-optional">选填</text>：</view>
           <input class="store-input" value="{{marketingForm.city}}" data-field="city" placeholder="请输入城市" placeholder-class="input-placeholder" bindinput="handleMarketingInput" />
         </view>
         <view class="store-field">
-          <view class="store-label">2. 商圈：</view>
+          <view class="store-label">2. 商圈<text class="store-optional">选填</text>：</view>
           <input class="store-input" value="{{marketingForm.businessArea}}" data-field="businessArea" placeholder="请输入商圈" placeholder-class="input-placeholder" bindinput="handleMarketingInput" />
         </view>
         <view class="store-field">
-          <view class="store-label">3. 行业：</view>
+          <view class="store-label">3. 行业<text class="store-optional">选填</text>：</view>
           <input class="store-input" value="{{marketingForm.industry}}" data-field="industry" placeholder="请输入行业" placeholder-class="input-placeholder" bindinput="handleMarketingInput" />
         </view>
         <view class="store-field">
-          <view class="store-label">4. 品类：</view>
+          <view class="store-label">4. 品类<text class="store-optional">选填</text>：</view>
           <input class="store-input" value="{{marketingForm.category}}" data-field="category" placeholder="请输入品类" placeholder-class="input-placeholder" bindinput="handleMarketingInput" />
         </view>
         <view class="store-field">
-          <view class="store-label">5. 品牌名称：</view>
+          <view class="store-label">5. 品牌名称<text class="store-optional">选填</text>：</view>
           <input class="store-input" value="{{marketingForm.brandName}}" data-field="brandName" placeholder="请输入品牌名称" placeholder-class="input-placeholder" bindinput="handleMarketingInput" />
         </view>
       </view>
@@ -132,22 +135,22 @@
 
   <view wx:elif="{{isHolidayCampaign}}" class="form-card card-shadow">
     <view class="field-block">
-      <view class="field-label">一. 填写节日营销信息</view>
+      <view class="field-label">一. 填写节日营销信息 <text class="optional-text">选填</text></view>
       <view class="store-form">
         <view class="store-field">
-          <view class="store-label">1. 行业：</view>
+          <view class="store-label">1. 行业<text class="store-optional">选填</text>：</view>
           <input class="store-input" value="{{marketingForm.industry}}" data-field="industry" placeholder="请输入行业" placeholder-class="input-placeholder" bindinput="handleMarketingInput" />
         </view>
         <view class="store-field">
-          <view class="store-label">2. 品类：</view>
+          <view class="store-label">2. 品类<text class="store-optional">选填</text>：</view>
           <input class="store-input" value="{{marketingForm.category}}" data-field="category" placeholder="请输入品类" placeholder-class="input-placeholder" bindinput="handleMarketingInput" />
         </view>
         <view class="store-field">
-          <view class="store-label">3. 品牌名称：</view>
+          <view class="store-label">3. 品牌名称<text class="store-optional">选填</text>：</view>
           <input class="store-input" value="{{marketingForm.brandName}}" data-field="brandName" placeholder="请输入品牌名称" placeholder-class="input-placeholder" bindinput="handleMarketingInput" />
         </view>
         <view class="store-field">
-          <view class="store-label">4. 节日：</view>
+          <view class="store-label">4. 节日<text class="store-optional">选填</text>：</view>
           <input class="store-input" value="{{marketingForm.festival}}" data-field="festival" placeholder="例如：端午节、七夕、国庆" placeholder-class="input-placeholder" bindinput="handleMarketingInput" />
         </view>
       </view>
@@ -177,14 +180,14 @@
 
   <view wx:elif="{{isHotspotTracker}}" class="form-card card-shadow">
     <view class="field-block">
-      <view class="field-label">一. 选择行业与品类</view>
+      <view class="field-label">一. 选择行业与品类 <text class="optional-text">选填</text></view>
       <view class="store-form">
         <view class="store-field">
-          <view class="store-label">1. 行业：</view>
+          <view class="store-label">1. 行业<text class="store-optional">选填</text>：</view>
           <input class="store-input" value="{{marketingForm.industry}}" data-field="industry" placeholder="请输入行业" placeholder-class="input-placeholder" bindinput="handleMarketingInput" />
         </view>
         <view class="store-field">
-          <view class="store-label">2. 品类：</view>
+          <view class="store-label">2. 品类<text class="store-optional">选填</text>：</view>
           <input class="store-input" value="{{marketingForm.category}}" data-field="category" placeholder="请输入品类" placeholder-class="input-placeholder" bindinput="handleMarketingInput" />
         </view>
       </view>
@@ -214,10 +217,10 @@
 
   <view wx:elif="{{isCommunityBroadcast}}" class="form-card card-shadow">
     <view class="field-block">
-      <view class="field-label">一. 品牌名称</view>
+      <view class="field-label">一. 品牌名称 <text class="optional-text">选填</text></view>
       <view class="store-form">
         <view class="store-field">
-          <view class="store-label">品牌名称：</view>
+          <view class="store-label">品牌名称<text class="store-optional">选填</text>：</view>
           <input class="store-input" value="{{marketingForm.brandName}}" data-field="brandName" placeholder="请输入品牌名称" placeholder-class="input-placeholder" bindinput="handleMarketingInput" />
         </view>
       </view>
@@ -463,8 +466,11 @@
   <view wx:elif="{{isTryOn}}" class="form-card card-shadow">
     <view class="field-block">
       <view class="field-label">一. 上传衣服照片</view>
-      <button class="upload-box {{tryOnImages.clothing ? 'upload-box-filled' : ''}}" data-field="clothing" bindtap="handleChooseTryOnImage">
-        <image wx:if="{{tryOnImages.clothing}}" class="uploaded-image" src="{{tryOnImages.clothing}}" mode="aspectFill"></image>
+      <button class="upload-box {{tryOnImages.clothing.length ? 'upload-box-filled' : ''}}" data-field="clothing" bindtap="handleChooseTryOnImage">
+        <view wx:if="{{tryOnImages.clothing.length}}" class="uploaded-grid">
+          <image wx:for="{{tryOnImages.clothing}}" wx:key="*this" class="uploaded-grid-image" src="{{item}}" mode="aspectFill"></image>
+          <view wx:if="{{tryOnImages.clothing.length < 9}}" class="uploaded-add">+</view>
+        </view>
         <view wx:else class="upload-placeholder">
           <image class="upload-icon" src="/assets/common/upload.png" mode="aspectFit"></image>
           <view class="upload-text">上传衣服照片</view>
@@ -474,8 +480,11 @@
 
     <view class="field-block">
       <view class="field-label">二. 上传本人照片</view>
-      <button class="upload-box {{tryOnImages.person ? 'upload-box-filled' : ''}}" data-field="person" bindtap="handleChooseTryOnImage">
-        <image wx:if="{{tryOnImages.person}}" class="uploaded-image" src="{{tryOnImages.person}}" mode="aspectFill"></image>
+      <button class="upload-box {{tryOnImages.person.length ? 'upload-box-filled' : ''}}" data-field="person" bindtap="handleChooseTryOnImage">
+        <view wx:if="{{tryOnImages.person.length}}" class="uploaded-grid">
+          <image wx:for="{{tryOnImages.person}}" wx:key="*this" class="uploaded-grid-image" src="{{item}}" mode="aspectFill"></image>
+          <view wx:if="{{tryOnImages.person.length < 9}}" class="uploaded-add">+</view>
+        </view>
         <view wx:else class="upload-placeholder">
           <image class="upload-icon" src="/assets/common/upload.png" mode="aspectFit"></image>
           <view class="upload-text">上传本人照片</view>
@@ -508,8 +517,11 @@
   <view wx:elif="{{isIdPhoto}}" class="form-card card-shadow">
     <view class="field-block">
       <view class="field-label">一. 上传人像照片</view>
-      <button class="upload-box {{uploadedImage ? 'upload-box-filled' : ''}}" bindtap="handleChooseImage">
-        <image wx:if="{{uploadedImage}}" class="uploaded-image" src="{{uploadedImage}}" mode="aspectFill"></image>
+      <button class="upload-box {{uploadedImages.length ? 'upload-box-filled' : ''}}" bindtap="handleChooseImage">
+        <view wx:if="{{uploadedImages.length}}" class="uploaded-grid">
+          <image wx:for="{{uploadedImages}}" wx:key="*this" class="uploaded-grid-image" src="{{item}}" mode="aspectFill"></image>
+          <view wx:if="{{uploadedImages.length < 9}}" class="uploaded-add">+</view>
+        </view>
         <view wx:else class="upload-placeholder">
           <image class="upload-icon" src="/assets/common/upload.png" mode="aspectFit"></image>
           <view class="upload-text">上传正面照片</view>
@@ -673,8 +685,11 @@
 
     <view class="field-block">
       <view class="field-label">五. 产品图片 / 包装图 / 详情页图</view>
-      <button class="upload-box {{uploadedImage ? 'upload-box-filled' : ''}}" bindtap="handleChooseImage">
-        <image wx:if="{{uploadedImage}}" class="uploaded-image" src="{{uploadedImage}}" mode="aspectFill"></image>
+      <button class="upload-box {{uploadedImages.length ? 'upload-box-filled' : ''}}" bindtap="handleChooseImage">
+        <view wx:if="{{uploadedImages.length}}" class="uploaded-grid">
+          <image wx:for="{{uploadedImages}}" wx:key="*this" class="uploaded-grid-image" src="{{item}}" mode="aspectFill"></image>
+          <view wx:if="{{uploadedImages.length < 9}}" class="uploaded-add">+</view>
+        </view>
         <view wx:else class="upload-placeholder">
           <image class="upload-icon" src="/assets/common/upload.png" mode="aspectFit"></image>
           <view class="upload-text">上传产品图/菜品图/门店图</view>
@@ -704,11 +719,95 @@
     </view>
   </view>
 
+  <view wx:elif="{{isMockupRender}}" class="form-card card-shadow">
+    <view class="field-block">
+      <view class="field-label">一. 上传图片或海报 <text class="optional-text">可多张</text></view>
+      <button class="upload-box {{uploadedImages.length ? 'upload-box-filled' : ''}}" bindtap="handleChooseImage">
+        <view wx:if="{{uploadedImages.length}}" class="uploaded-grid">
+          <image wx:for="{{uploadedImages}}" wx:key="*this" class="uploaded-grid-image" src="{{item}}" mode="aspectFill"></image>
+          <view wx:if="{{uploadedImages.length < 9}}" class="uploaded-add">+</view>
+        </view>
+        <view wx:else class="upload-placeholder">
+          <image class="upload-icon" src="/assets/common/upload.png" mode="aspectFit"></image>
+          <view class="upload-text">上传图片或海报</view>
+        </view>
+      </button>
+    </view>
+
+    <view class="field-block">
+      <view class="field-label">二. 填写素材信息 <text class="optional-text">不上传时填写</text></view>
+      <textarea
+        class="prompt-input"
+        maxlength="500"
+        value="{{mockupForm.materialDesc}}"
+        data-field="materialDesc"
+        placeholder="例如：咖啡店开业海报、奶茶新品灯箱画面、活动促销主视觉"
+        placeholder-class="input-placeholder"
+        bindinput="handleMockupInput"
+      ></textarea>
+      <view class="input-count">{{mockupForm.materialDesc.length}}/500</view>
+    </view>
+
+    <view class="field-block">
+      <view class="field-label">三. 上传想放置的位置 <text class="optional-text">可多张</text></view>
+      <button class="upload-box {{mockupSceneImages.length ? 'upload-box-filled' : ''}}" bindtap="handleChooseMockupSceneImage">
+        <view wx:if="{{mockupSceneImages.length}}" class="uploaded-grid">
+          <image wx:for="{{mockupSceneImages}}" wx:key="*this" class="uploaded-grid-image" src="{{item}}" mode="aspectFill"></image>
+          <view wx:if="{{mockupSceneImages.length < 9}}" class="uploaded-add">+</view>
+        </view>
+        <view wx:else class="upload-placeholder">
+          <image class="upload-icon" src="/assets/common/upload.png" mode="aspectFit"></image>
+          <view class="upload-text">上传墙面/灯箱/门头照片</view>
+        </view>
+      </button>
+    </view>
+
+    <view class="field-block">
+      <view class="field-label">四. 填写目标位置</view>
+      <textarea
+        class="prompt-input"
+        maxlength="500"
+        value="{{mockupForm.sceneDesc}}"
+        data-field="sceneDesc"
+        placeholder="例如：放到咖啡店外立面门头、商场走廊灯箱、室内白墙海报位、展会易拉宝"
+        placeholder-class="input-placeholder"
+        bindinput="handleMockupInput"
+      ></textarea>
+      <view class="input-count">{{mockupForm.sceneDesc.length}}/500</view>
+    </view>
+
+    <view class="field-block">
+      <view class="field-label">五. 选择生成图片比例</view>
+      <view class="ratio-grid">
+        <view
+          wx:for="{{imageRatios}}"
+          wx:key="*this"
+          class="ratio-chip {{selectedImageRatio === item ? 'ratio-chip-active' : ''}}"
+          data-ratio="{{item}}"
+          bindtap="handleRatioSelect"
+        >
+          {{item}}
+        </view>
+      </view>
+    </view>
+
+    <view
+      class="generate-button {{generating ? 'generate-button-disabled' : ''}}"
+      bindtap="handleGenerate"
+    >
+      <image class="button-icon" src="/assets/common/magic-generate.png" mode="aspectFit"></image>
+      <text>{{generating ? '生成中...' : '立即生成'}}</text>
+    </view>
+  </view>
+
   <view wx:elif="{{isOldPhotoRestore}}" class="form-card card-shadow">
     <view class="field-block">
       <view class="field-label">第一步：上传照片</view>
-      <button class="upload-box {{uploadedImage ? 'upload-box-filled' : ''}}" bindtap="handleChooseImage">
-        <image wx:if="{{uploadedImage}}" class="uploaded-image" src="{{uploadedImage}}" mode="aspectFill"></image>
+      <button class="upload-box {{uploadedImages.length ? 'upload-box-filled' : ''}}" bindtap="handleChooseImage">
+        <view wx:if="{{uploadedImages.length}}" class="uploaded-grid">
+          <image wx:for="{{uploadedImages}}" wx:key="*this" class="uploaded-grid-image" src="{{item}}" mode="aspectFill"></image>
+          <view wx:if="{{uploadedImages.length < 9}}" class="uploaded-add">+</view>
+        </view>
         <view wx:else class="upload-placeholder">
           <image class="upload-icon" src="/assets/common/upload.png" mode="aspectFit"></image>
           <view class="upload-text">上传老照片</view>
@@ -786,8 +885,12 @@
   <view wx:else class="form-card card-shadow">
     <view wx:if="{{isImageSkill}}" class="field-block">
       <view class="field-label">{{isTemplateSimilar ? '上传图片' : (skill.uploadLabel || '参考图片')}}</view>
-      <button class="upload-box {{uploadedImage ? 'upload-box-filled' : ''}}" bindtap="handleChooseImage">
-        <image wx:if="{{uploadedImage}}" class="uploaded-image" src="{{uploadedImage}}" mode="aspectFill"></image>
+      <button class="upload-box {{uploadedImages.length ? 'upload-box-filled' : ''}}" bindtap="handleChooseImage">
+        <image wx:if="{{uploadedImages.length && skill.maxUploadCount === 1}}" class="uploaded-image" src="{{uploadedImages[0]}}" mode="aspectFill"></image>
+        <view wx:elif="{{uploadedImages.length}}" class="uploaded-grid">
+          <image wx:for="{{uploadedImages}}" wx:key="*this" class="uploaded-grid-image" src="{{item}}" mode="aspectFill"></image>
+          <view wx:if="{{uploadedImages.length < 9}}" class="uploaded-add">+</view>
+        </view>
         <view wx:else class="upload-placeholder">
           <image class="upload-icon" src="/assets/common/upload.png" mode="aspectFit"></image>
           <view class="upload-text">{{isTemplateSimilar ? '上传图片' : (skill.uploadText || '上传参考图片')}}</view>
@@ -812,18 +915,18 @@
 
     <view wx:if="{{!isTemplateSimilar}}" class="field-block">
       <view wx:if="{{isDianpingImage}}" class="dianping-category-block">
-        <view class="field-label">商家信息</view>
+        <view class="field-label">商家信息 <text class="optional-text">选填</text></view>
         <view class="store-form">
           <view class="store-field">
-            <view class="store-label">1. 行业：</view>
+            <view class="store-label">1. 行业<text class="store-optional">选填</text>：</view>
             <input class="store-input" value="{{marketingForm.industry}}" data-field="industry" placeholder="请输入行业" placeholder-class="input-placeholder" bindinput="handleMarketingInput" />
           </view>
           <view class="store-field">
-            <view class="store-label">2. 品类：</view>
+            <view class="store-label">2. 品类<text class="store-optional">选填</text>：</view>
             <input class="store-input" value="{{marketingForm.category}}" data-field="category" placeholder="请输入品类" placeholder-class="input-placeholder" bindinput="handleMarketingInput" />
           </view>
           <view class="store-field">
-            <view class="store-label">3. 品牌名称：</view>
+            <view class="store-label">3. 品牌名称<text class="store-optional">选填</text>：</view>
             <input class="store-input" value="{{marketingForm.brandName}}" data-field="brandName" placeholder="请输入品牌名称" placeholder-class="input-placeholder" bindinput="handleMarketingInput" />
           </view>
         </view>

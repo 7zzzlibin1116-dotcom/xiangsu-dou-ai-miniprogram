@@ -10,7 +10,7 @@ const SKILL_COSTS = {
   'photo-retouch': 20,
   'dianping-image': 30,
   'old-photo-restore': 20,
-  'image-style': 20,
+  'watermark-remove': 0,
   'try-on': 20,
   'fashion-render': 20
 };

@@ -92,6 +92,10 @@ function postMock(url, data = {}) {
     return mock.clearRecords().then(result => mockResponse(result));
   }
 
+  if (url === '/feedback') {
+    return mockResponse(mock.saveFeedback(data));
+  }
+
   return mockResponse(null);
 }
 

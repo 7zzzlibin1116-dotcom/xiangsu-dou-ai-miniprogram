@@ -1,4 +1,5 @@
 const STORAGE_KEY = 'PIXELDOU_RECORDS';
+const FEEDBACK_STORAGE_KEY = 'PIXELDOU_FEEDBACKS';
 
 const categories = [
   { id: 'marketing', name: '日常营销' },
@@ -9,17 +10,14 @@ const categories = [
 
 const mockResultImages = [
   '/assets/empty/empty-result.png',
-  '/assets/empty/inspiration-placeholder.png',
-  '/assets/backgrounds/home-brand-banner.png',
-  '/assets/backgrounds/profile-brand-banner.png',
-  '/assets/backgrounds/pixel-dot-bg.png'
+  '/assets/empty/inspiration-placeholder.png'
 ];
 
 const skills = [
   {
     id: 'marketing-note',
-    title: '营销笔记生成',
-    description: '快速生成小红书、点评风格种草笔记。',
+    title: '海报笔记生成',
+    description: '快速生成营销海报、营销笔记。',
     category: 'marketing',
     type: 'text',
     icon: '文',
@@ -39,12 +37,12 @@ const skills = [
   {
     id: 'photo-retouch',
     title: '修图',
-    description: '上传图片，模拟优化光线、质感和构图。',
+    description: '其他板块生成的图片需要修改细节在这里',
     category: 'marketing',
     type: 'image',
     icon: '图',
     iconImage: '/assets/skills/photo-retouch.png',
-    promptPlaceholder: '按你的想法修改图片，例如：修改文字、去除杂物、调整颜色、增强清晰度',
+    promptPlaceholder: '其他板块生成的图片需要修改细节在这里',
     defaultPrompt: '根据用户上传的图片进行 AI 修图，优先提升清晰度、光线、色彩、构图和整体质感；如果用户填写了具体修改要求，以用户要求为准，保持画面自然真实。',
     tags: ['图片', '修图']
   },
@@ -109,6 +107,22 @@ const skills = [
     tags: ['图片', '修复']
   },
   {
+    id: 'watermark-remove',
+    title: '去图片水印',
+    description: '上传一张图片，模拟去除水印、文字或遮挡元素。',
+    category: 'life',
+    type: 'image',
+    badge: '免费',
+    icon: '净',
+    iconImage: '/assets/skills/photo-retouch.png',
+    uploadLabel: '上传需要去水印的图片',
+    uploadText: '上传图片',
+    maxUploadCount: 1,
+    promptPlaceholder: '可选填写水印位置，例如：右下角文字、画面中间 logo、顶部日期水印',
+    defaultPrompt: '根据用户上传的单张图片，去除图片中的水印、文字、logo 或遮挡元素，并自然补全背景纹理，保持画面真实干净。',
+    tags: ['图片', '去水印']
+  },
+  {
     id: 'high-eq-reply',
     title: '高情商回复',
     description: '根据不同聊天场景，生成得体自然的回复。',
@@ -163,28 +177,6 @@ const skills = [
     tags: ['学生', '证件照']
   },
   {
-    id: 'paper-outline',
-    title: '论文大纲',
-    description: '根据题目生成论文结构和章节重点。',
-    category: 'student',
-    type: 'text',
-    icon: '纲',
-    iconImage: '/assets/skills/paper-outline.png',
-    defaultPrompt: '根据用户提供的论文题目、研究方向或课程要求，生成结构清晰的论文大纲，包含标题、摘要方向、章节结构、每章重点、研究方法和可展开的论点。',
-    tags: ['论文', '大纲']
-  },
-  {
-    id: 'english-translate',
-    title: '英语翻译',
-    description: '翻译并润色英文表达，适合学习场景。',
-    category: 'student',
-    type: 'text',
-    icon: '译',
-    iconImage: '/assets/skills/english-translate.png',
-    defaultPrompt: '将用户输入的中文或英文内容进行准确翻译，并根据学习场景润色表达；输出自然、清晰、语法正确的译文，必要时补充关键词解释或更地道表达。',
-    tags: ['英语', '学习']
-  },
-  {
     id: 'paper-check',
     title: '论文查重',
     description: '模拟识别高重复表达并给出改写建议。',
@@ -194,17 +186,6 @@ const skills = [
     iconImage: '/assets/skills/paper-check.png',
     defaultPrompt: '检查用户提供的论文片段中可能重复、口语化或表达不够学术的内容，并给出降重改写建议；输出改写版本和修改原因，保持原意不变。',
     tags: ['论文', '改写']
-  },
-  {
-    id: 'ppt-outline',
-    title: 'PPT 大纲',
-    description: '快速生成汇报型 PPT 页标题和内容框架。',
-    category: 'student',
-    type: 'text',
-    icon: 'P',
-    iconImage: '/assets/skills/ppt-outline.png',
-    defaultPrompt: '根据用户提供的主题、汇报对象和内容方向，生成一份 PPT 大纲，包含页标题、每页核心内容、讲述顺序和适合展示的要点表达。',
-    tags: ['PPT', '汇报']
   },
   {
     id: 'fashion-render',
@@ -221,37 +202,18 @@ const skills = [
     tags: ['学生', '服装', '效果图']
   },
   {
-    id: 'meeting-summary',
-    title: '会议纪要',
-    description: '把会议要点整理成行动项和结论摘要。',
+    id: 'mockup-render',
+    title: '效果图生成',
+    description: '上传海报或图片，生成墙面、灯箱、门头等场景效果图。',
     category: 'work',
-    type: 'text',
-    icon: '会',
-    iconImage: '/assets/skills/meeting-summary.png',
-    defaultPrompt: '将用户提供的会议记录、聊天内容或要点整理成专业会议纪要，包含会议主题、核心结论、讨论要点、待办事项、负责人和截止时间。',
-    tags: ['效率', '总结']
-  },
-  {
-    id: 'email-polish',
-    title: '邮件润色',
-    description: '把草稿改成清晰、得体的商务邮件。',
-    category: 'work',
-    type: 'text',
-    icon: '邮',
-    iconImage: '/assets/skills/email-polish.png',
-    defaultPrompt: '将用户提供的邮件草稿润色为清晰、礼貌、专业的商务邮件；保留原意，优化结构、语气、措辞和行动请求，让收件人更容易理解并回复。',
-    tags: ['工作', '沟通']
-  },
-  {
-    id: 'weekly-report',
-    title: '周报生成',
-    description: '根据本周事项生成简洁专业的工作周报。',
-    category: 'work',
-    type: 'text',
-    icon: '周',
-    iconImage: '/assets/skills/weekly-report.png',
-    defaultPrompt: '根据用户提供的本周工作事项，生成简洁专业的周报，包含本周完成、关键进展、数据结果、问题风险、下周计划和需要协同的事项。',
-    tags: ['周报', '效率']
+    type: 'image',
+    icon: '效',
+    iconImage: '/assets/skills/photo-retouch.png',
+    uploadLabel: '上传图片或海报',
+    uploadText: '上传图片或海报',
+    promptPlaceholder: '例如：放到商场灯箱、门店门头、展架、墙面海报位',
+    defaultPrompt: '根据用户提供的图片或海报素材，以及目标投放场景，生成真实自然的空间效果图，保持素材内容清晰可读，匹配墙面、灯箱、门头、展架等载体透视和光影。',
+    tags: ['效果图', '海报', '场景']
   },
   {
     id: 'resume-polish',
@@ -447,8 +409,22 @@ function saveRecord(record) {
   return normalized;
 }
 
+function saveFeedback(feedback) {
+  const feedbacks = wx.getStorageSync(FEEDBACK_STORAGE_KEY) || [];
+  const normalized = {
+    id: `feedback_${Date.now()}`,
+    createdAt: formatTime(new Date()),
+    status: '已提交',
+    ...feedback
+  };
+
+  wx.setStorageSync(FEEDBACK_STORAGE_KEY, [normalized].concat(Array.isArray(feedbacks) ? feedbacks : []));
+  return normalized;
+}
+
 module.exports = {
   STORAGE_KEY,
+  FEEDBACK_STORAGE_KEY,
   categories,
   inspirationCategories,
   skills,
@@ -462,5 +438,6 @@ module.exports = {
   getRecords,
   deleteRecord,
   clearRecords,
-  saveRecord
+  saveRecord,
+  saveFeedback
 };

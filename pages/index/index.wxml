@@ -1,7 +1,11 @@
 <view class="page index-page">
-  <view class="hero card-shadow" bindtap="handleStart">
-    <image class="hero-image" src="/assets/banner-pixeldou.png" mode="aspectFill"></image>
-  </view>
+  <swiper class="hero card-shadow" autoplay circular interval="3500" duration="500" indicator-dots indicator-color="rgba(255,255,255,0.55)" indicator-active-color="#ffffff">
+    <swiper-item wx:for="{{banners}}" wx:key="id">
+      <view class="hero-slide" data-type="{{item.type}}" data-skill-id="{{item.skillId}}" bindtap="handleBannerTap">
+        <image class="hero-image" src="{{item.image}}" mode="aspectFill"></image>
+      </view>
+    </swiper-item>
+  </swiper>
 
   <view class="category-row">
     <button
@@ -27,6 +31,7 @@
       data-id="{{item.id}}"
       bindtap="handleSkillTap"
     >
+      <view wx:if="{{item.badge}}" class="skill-badge">{{item.badge}}</view>
       <view class="skill-icon">
         <image wx:if="{{item.iconImage}}" class="skill-icon-image" src="{{item.iconImage}}" mode="aspectFit"></image>
         <text wx:else>{{item.icon}}</text>

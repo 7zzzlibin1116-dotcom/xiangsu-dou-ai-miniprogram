@@ -5,6 +5,19 @@ Page({
   data: {
     categories: mock.categories,
     activeCategory: 'marketing',
+    banners: [
+      {
+        id: 'feedback',
+        image: '/assets/banner-feedback.jpg',
+        type: 'contact'
+      },
+      {
+        id: 'watermark',
+        image: '/assets/banner-watermark.jpg',
+        type: 'skill',
+        skillId: 'watermark-remove'
+      }
+    ],
     skills: [],
     filteredSkills: []
   },
@@ -44,6 +57,27 @@ Page({
     wx.navigateTo({
       url: `/pages/skill/skill?skillId=${skillId}`
     });
+  },
+
+  handleBannerTap(event) {
+    const type = event.currentTarget.dataset.type;
+    const skillId = event.currentTarget.dataset.skillId;
+
+    if (type === 'contact') {
+      wx.navigateTo({
+        url: '/pages/contact/contact'
+      });
+      return;
+    }
+
+    if (type === 'skill' && skillId) {
+      wx.navigateTo({
+        url: `/pages/skill/skill?skillId=${skillId}`
+      });
+      return;
+    }
+
+    this.handleStart();
   },
 
   handleStart() {

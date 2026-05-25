@@ -11,6 +11,11 @@
   background: #ffd51a;
 }
 
+.hero-slide {
+  width: 100%;
+  height: 100%;
+}
+
 .hero-image {
   width: 100%;
   height: 100%;
@@ -53,12 +58,28 @@
 }
 
 .skill-card {
+  position: relative;
   width: calc((100% - 22rpx) / 2);
   min-height: 240rpx;
   margin-bottom: 22rpx;
   padding: 24rpx;
   border-radius: 28rpx;
   background: #ffffff;
+}
+
+.skill-badge {
+  position: absolute;
+  top: 18rpx;
+  right: 18rpx;
+  height: 38rpx;
+  padding: 0 16rpx;
+  border-radius: 999rpx;
+  background: linear-gradient(135deg, #f97316 0%, #facc15 100%);
+  color: #ffffff;
+  font-size: 20rpx;
+  font-weight: 900;
+  line-height: 38rpx;
+  box-shadow: 0 8rpx 18rpx rgba(249, 115, 22, 0.22);
 }
 
 .skill-icon {

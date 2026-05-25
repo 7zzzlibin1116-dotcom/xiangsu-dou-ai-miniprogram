@@ -1,0 +1,8 @@
+<view class="page about-page">
+  <view class="about-card card-shadow">
+    <view class="about-title">关于我们</view>
+    <view class="about-paragraph">我们专注于 AI 应用与智能内容生成领域，致力于让 AI 使用起来更简单、更高效、更贴近日常生活与商业需求。</view>
+    <view class="about-paragraph">旗下产品「像素豆AI」微信小程序，通过将复杂的提示词、模型能力与创作流程进行模块化整理，为用户提供“开箱即用”的 AI Skills 服务。用户无需掌握专业 AI 知识，也能快速完成文案创作、图片生成、营销设计、修图优化、灵感创意等多种任务。</view>
+    <view class="about-paragraph">像素豆AI以“日常化、轻量化、结果导向”为核心理念，重点聚焦个人用户与中小商家在营销、电商、生活、办公等场景中的真实需求，通过简洁交互与智能工作流，让 AI 真正成为人人可用的效率工具。</view>
+  </view>
+</view>

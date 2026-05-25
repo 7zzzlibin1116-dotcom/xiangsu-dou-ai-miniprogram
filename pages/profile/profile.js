@@ -99,12 +99,15 @@ Page({
     });
   },
 
-  handleAbout() {
-    wx.showModal({
-      title: '关于像素豆 AI',
-      content: '像素豆 AI 的使命是：让 AI 使用起来更简单。',
-      showCancel: false,
-      confirmText: '知道了'
+  goContact() {
+    wx.navigateTo({
+      url: '/pages/contact/contact'
+    });
+  },
+
+  goAbout() {
+    wx.navigateTo({
+      url: '/pages/about/about'
     });
   }
 });

@@ -42,7 +42,7 @@
   <view class="menu-card card-shadow">
     <view class="menu-item" bindtap="goMembership">
       <view class="menu-left">
-        <image class="menu-icon" src="/assets/common/vip.png" mode="aspectFit"></image>
+        <image class="menu-icon menu-icon-vip" src="/assets/common/vip.png" mode="aspectFit"></image>
         <view class="menu-title">会员充值</view>
       </view>
       <view class="menu-arrow">›</view>
@@ -54,21 +54,19 @@
       </view>
       <view class="menu-arrow">›</view>
     </view>
-    <view class="menu-item" bindtap="handleMenuTap" data-title="联系客服">
+    <view class="menu-item" bindtap="goContact">
       <view class="menu-left">
         <image class="menu-icon" src="/assets/common/service.png" mode="aspectFit"></image>
         <view class="menu-title">联系客服</view>
       </view>
       <view class="menu-arrow">›</view>
     </view>
-    <view class="menu-item menu-item-last" bindtap="handleAbout">
+    <view class="menu-item menu-item-last" bindtap="goAbout">
       <view class="menu-left">
         <image class="menu-icon" src="/assets/common/about.png" mode="aspectFit"></image>
-        <view class="menu-title">关于像素豆 AI</view>
+        <view class="menu-title">关于我们</view>
       </view>
       <view class="menu-arrow">›</view>
     </view>
   </view>
-
-  <image class="profile-banner card-shadow" src="/assets/backgrounds/profile-brand-banner.png" mode="aspectFill"></image>
 </view>
