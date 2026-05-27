@@ -42,6 +42,7 @@ const skills = [
     type: 'image',
     icon: '图',
     iconImage: '/assets/skills/photo-retouch.png',
+    maxUploadCount: 1,
     promptPlaceholder: '其他板块生成的图片需要修改细节在这里',
     defaultPrompt: '根据用户上传的图片进行 AI 修图，优先提升清晰度、光线、色彩、构图和整体质感；如果用户填写了具体修改要求，以用户要求为准，保持画面自然真实。',
     tags: ['图片', '修图']
@@ -104,6 +105,7 @@ const skills = [
     type: 'image',
     icon: '旧',
     iconImage: '/assets/skills/old-photo-restore.png',
+    maxUploadCount: 1,
     tags: ['图片', '修复']
   },
   {
@@ -140,6 +142,7 @@ const skills = [
     type: 'image',
     icon: '衣',
     iconImage: '/assets/skills/try-on.png',
+    maxUploadCount: 1,
     tags: ['图片', '穿搭']
   },
   {
@@ -172,6 +175,7 @@ const skills = [
     iconImage: '/assets/skills/essay-polish.png',
     uploadLabel: '上传人像照片',
     uploadText: '上传正面照片',
+    maxUploadCount: 1,
     promptPlaceholder: '可选填写要求，例如：保持自然、不要过度美颜、衣服正式一点',
     defaultPrompt: '根据上传人像生成规范证件照，保持五官自然清晰。',
     tags: ['学生', '证件照']
@@ -190,16 +194,32 @@ const skills = [
   {
     id: 'fashion-render',
     title: '服装设计效果图',
-    description: '上传服装线稿，生成完整设计效果图。',
+    description: '上传服装线稿和模特图，生成完整设计效果图。',
     category: 'student',
     type: 'image',
     icon: '衣',
     iconImage: '/assets/skills/fashion-render.png',
     uploadLabel: '上传线稿',
     uploadText: '上传服装线稿',
+    maxUploadCount: 1,
     promptPlaceholder: '可选填写面料、颜色、廓形、风格，例如：白色雪纺连衣裙、法式复古',
-    defaultPrompt: '根据上传的服装线稿生成完整服装设计效果图，补全面料、颜色、结构细节和成衣质感。',
+    defaultPrompt: '根据上传的服装线稿和模特参考图生成完整服装设计效果图，补全面料、颜色、结构细节和成衣质感，让服装自然呈现在模特身上。',
     tags: ['学生', '服装', '效果图']
+  },
+  {
+    id: 'fashion-coloring',
+    title: '服装设计线稿上色',
+    description: '上传服装线稿，按马克笔、水彩等风格完成上色。',
+    category: 'student',
+    type: 'image',
+    icon: '色',
+    iconImage: '/assets/skills/fashion-render.png',
+    uploadLabel: '上传线稿素材',
+    uploadText: '上传线稿',
+    maxUploadCount: 1,
+    promptPlaceholder: '例如：马克笔风格，外套上米白色，领口深棕色，裙摆浅蓝色，整体春夏感',
+    defaultPrompt: '根据用户上传的服装线稿进行上色，按照用户选择的风格和描述补充色彩、材质、明暗层次与服装细节，保持线稿结构清晰。',
+    tags: ['学生', '服装', '上色']
   },
   {
     id: 'mockup-render',
@@ -211,6 +231,7 @@ const skills = [
     iconImage: '/assets/skills/photo-retouch.png',
     uploadLabel: '上传图片或海报',
     uploadText: '上传图片或海报',
+    maxUploadCount: 1,
     promptPlaceholder: '例如：放到商场灯箱、门店门头、展架、墙面海报位',
     defaultPrompt: '根据用户提供的图片或海报素材，以及目标投放场景，生成真实自然的空间效果图，保持素材内容清晰可读，匹配墙面、灯箱、门头、展架等载体透视和光影。',
     tags: ['效果图', '海报', '场景']
@@ -237,7 +258,18 @@ const inspirationCategories = [
   { id: 'food', name: '美食' }
 ];
 
+const uglyDoodlePrompt = 'Turn this photo into a funny ugly doodle drawing. Make it look like: a quick sketch using a cheap marker or crayon messy, rough, childlike style bad perspective and awkward proportions slightly exaggerated facial features Add: simple cartoon background (like buildings, trees, street) random sketchy lines and details uneven coloring and visible strokes Style: looks like a lazy drawing, not polished humorous and a bit stupid-looking meme-like, casual, internet style Do NOT: make it realistic';
+
 const inspirations = [
+  {
+    id: 'ugly-doodle-dogs',
+    title: '丑萌涂鸦风',
+    category: 'pet',
+    categoryIds: ['hot', 'pet'],
+    image: '/assets/inspiration/ugly-doodle-dogs.jpg',
+    prompt: uglyDoodlePrompt,
+    likes: 286
+  },
   {
     id: 'case-1',
     title: '美食种草原型',
@@ -307,6 +339,43 @@ function getRandomResultImage(seed) {
   return mockResultImages[index];
 }
 
+function buildMockResultText(skillId, prompt) {
+  if (skillId === 'marketing-note') {
+    return [
+      '标题：今天被这家店狠狠治愈了',
+      '',
+      '正文：',
+      '周末路过发现的一家宝藏小店，环境干净舒服，出片也很自然。招牌产品很有记忆点，适合朋友聚会、情侣约会，也适合一个人来放松一下。',
+      '',
+      '推荐理由：',
+      '1. 视觉素材适合做小红书种草图',
+      '2. 卖点清晰，适合突出门店特色和活动信息',
+      '3. 文案语气自然，不像硬广',
+      '',
+      '话题：#探店 #本地生活 #宝藏小店 #像素豆AI'
+    ].join('\n');
+  }
+
+  if (skillId === 'moments-copy') {
+    return [
+      '朋友圈文案：',
+      '今天店里上新/活动安排好啦，适合想轻松体验一下的朋友。图片已经帮你配好风格，直接发朋友圈也很自然。',
+      '',
+      '短版：',
+      '最近想来店里的朋友可以安排啦，今天这组真的很适合发圈。',
+      '',
+      '引导语：',
+      '想了解详情可以私信我，我发你具体套餐/活动规则。'
+    ].join('\n');
+  }
+
+  if (String(prompt || '').trim()) {
+    return `已根据你的需求生成内容：\n${prompt}`;
+  }
+
+  return '';
+}
+
 function getInspirationById(id) {
   return clone(inspirations.find(item => item.id === id) || inspirations[0]);
 }
@@ -333,12 +402,14 @@ function createTask(payload = {}) {
   const taskId = `task_${Date.now()}`;
   const skill = skills.find(item => item.id === payload.skillId) || skills[0];
   const resultImage = getRandomResultImage(`${payload.skillId}${payload.prompt}${taskId}`);
+  const resultText = buildMockResultText(skill.id, payload.prompt);
 
   mockTasks[taskId] = {
     taskId,
     status: 'processing',
     skillId: skill.id,
     resultImage,
+    resultText,
     createdAt: Date.now()
   };
 

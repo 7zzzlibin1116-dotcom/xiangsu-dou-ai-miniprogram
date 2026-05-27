@@ -51,7 +51,7 @@
           <view class="record-status">{{item.status}}</view>
         </view>
         <view class="record-time">{{item.createdAt}}</view>
-        <view class="record-prompt">{{item.prompt}}</view>
+        <view class="record-prompt">{{item.resultText || item.prompt}}</view>
       </view>
     </view>
   </view>

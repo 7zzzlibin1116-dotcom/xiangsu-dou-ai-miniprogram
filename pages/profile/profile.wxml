@@ -14,12 +14,12 @@
       <view class="nickname-row">
         <view class="nickname">{{nickName}}</view>
       </view>
-      <view class="profile-desc">{{loggedIn ? '欢迎使用像素豆 AI' : '登录后同步创作记录和次数'}}</view>
+      <view class="profile-desc">{{loggedIn ? '欢迎使用像素豆 AI' : '登录后同步创作记录和积分'}}</view>
       <view class="member-row">
         <view class="member-badge">
-          <text class="member-crown">♛</text>
           <text>{{memberLevel}}</text>
         </view>
+        <view class="member-expire">到期：{{memberExpireText}}</view>
         <button wx:if="{{!loggedIn}}" class="login-button" bindtap="handleLogin">微信登录</button>
         <view wx:else class="upgrade-link" bindtap="goMembership">会员充值 ›</view>
       </view>
@@ -44,6 +44,13 @@
       <view class="menu-left">
         <image class="menu-icon menu-icon-vip" src="/assets/common/vip.png" mode="aspectFit"></image>
         <view class="menu-title">会员充值</view>
+      </view>
+      <view class="menu-arrow">›</view>
+    </view>
+    <view class="menu-item" bindtap="goTopup">
+      <view class="menu-left">
+        <image class="menu-icon" src="/assets/membership/benefit-coin.png" mode="aspectFit"></image>
+        <view class="menu-title">积分加油包</view>
       </view>
       <view class="menu-arrow">›</view>
     </view>

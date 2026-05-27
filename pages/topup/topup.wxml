@@ -1,0 +1,59 @@
+<view class="page topup-page">
+  <view class="top-bar">
+    <view class="back-hit" bindtap="goBack">返回</view>
+  </view>
+
+  <view class="title-block">
+    <view class="page-title">积分加油包</view>
+    <view class="page-subtitle">自定义充值积分，1 元 = 20 积分</view>
+  </view>
+
+  <view class="wallet-card card-shadow">
+    <image class="wallet-icon" src="/assets/membership/benefit-coin.png" mode="aspectFit"></image>
+    <view class="wallet-main">
+      <view class="wallet-label">当前积分</view>
+      <view class="wallet-value">{{currentPoints}}</view>
+    </view>
+    <view class="member-pill">{{memberLevel}}</view>
+  </view>
+
+  <view class="form-card card-shadow">
+    <view class="field-label">充值金额</view>
+    <view class="amount-row">
+      <text class="amount-symbol">¥</text>
+      <input
+        class="amount-input"
+        type="digit"
+        value="{{amount}}"
+        placeholder="请输入金额"
+        placeholder-class="input-placeholder"
+        bindinput="handleAmountInput"
+      />
+    </view>
+
+    <view class="quick-grid">
+      <view class="quick-chip" data-amount="10" bindtap="quickSelect">¥10</view>
+      <view class="quick-chip" data-amount="30" bindtap="quickSelect">¥30</view>
+      <view class="quick-chip" data-amount="50" bindtap="quickSelect">¥50</view>
+      <view class="quick-chip" data-amount="100" bindtap="quickSelect">¥100</view>
+    </view>
+
+    <view class="points-preview">
+      <text>预计获得</text>
+      <text class="points-number">{{points}}</text>
+      <text>积分</text>
+    </view>
+  </view>
+
+  <view class="rule-card card-shadow">
+    <view class="rule-title">充值规则</view>
+    <view class="rule-line">1 元可兑换 20 积分</view>
+    <view class="rule-line">仅高级会员、钻石会员、黑金会员可购买</view>
+    <view class="rule-line">积分仅限平台内使用，不可提现</view>
+    <view class="rule-line">积分加油包只增加积分，不改变会员等级</view>
+  </view>
+
+  <button class="topup-button primary-gradient {{canBuyTopup ? '' : 'topup-button-disabled'}}" bindtap="handleRecharge">
+    {{canBuyTopup ? '立即充值' : '会员专属，先开通会员'}}
+  </button>
+</view>

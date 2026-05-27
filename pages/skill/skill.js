@@ -6,9 +6,11 @@ const MOMENTS_COPY_LAST_KEY = 'PIXELDOU_MOMENTS_COPY_FORM';
 const noteStyles = ['种草打卡', '特色菜品', '新店开业', '优惠套餐', '地方特色', '品牌活动', '活动宣传', '自定义'];
 const momentsStyles = ['新品预热', '限时优惠', '到店打卡', '私域福利', '节日祝福', '客户见证', '爆款推荐', '自定义'];
 const communityStyles = ['社群欢迎语', '活动预热', '秒杀通知', '福利提醒', '互动话题', '复购户数', '用户唤醒', '自定义'];
+const hotspotStyles = ['同城热点', '行业新闻', '今日平台热搜', '同行动作'];
 const travelStyles = ['美食', '拍照打卡', '自然风景', '历史文化', '小众路线', '轻松不累', '特种兵暴走', '亲子友好', '夜生活', '购物', '博物馆', '咖啡甜品', '本地市井', '自定义'];
 const highEqScenarios = ['领导消息怎么回', '客户消息怎么回', '朋友阴阳怪气怎么回', '对象生气怎么回', '不想去聚会怎么回', '拒绝别人怎么说', '催别人还钱怎么说', '道歉怎么说', '感谢怎么说', '安慰别人怎么说'];
 const idPhotoOptions = ['白底证件照', '蓝底证件照', '红底证件照', '一寸照', '二寸照', '简历头像', '职业形象照'];
+const fashionColorStyles = ['马克笔', '水彩', '彩铅', '平涂', '厚涂', '日系插画', '时装手稿', '自定义'];
 const resumeDirections = ['更专业', '更有数据感', '更适合大厂', '更适合销售岗位', '更适合运营岗位', '更突出 AI 能力', '更简洁', '更有结果导向'];
 const productTypes = ['餐饮菜品', '门店套餐', '美妆护肤', '服装穿搭', '食品饮料', '数码产品', '家居用品', '教育课程', 'AI工具', '本地服务', '电商商品', '其他'];
 const oldPhotoNeeds = ['变清晰', '去划痕', '去污渍', '修复破损', '修复褪色', '黑白上色', '保留年代感'];
@@ -41,6 +43,8 @@ Page({
     isTryOn: false,
     isHighEqReply: false,
     isIdPhoto: false,
+    isFashionRender: false,
+    isFashionColoring: false,
     isResumePolish: false,
     isSellingPoints: false,
     isOldPhotoRestore: false,
@@ -61,12 +65,15 @@ Page({
       clothing: [],
       person: []
     },
+    fashionModelImages: [],
     mockupSceneImages: [],
     prompt: '',
     noteStyles,
+    hotspotStyles,
     travelStyles,
     highEqScenarios,
     idPhotoOptions,
+    fashionColorStyles,
     resumeDirections,
     productTypes,
     oldPhotoNeeds,
@@ -79,6 +86,7 @@ Page({
       category: '',
       brandName: '',
       festival: '',
+      hotspotStyle: '同城热点',
       noteStyle: '种草打卡',
       customStyle: '',
       sellingPoints: ''
@@ -111,6 +119,11 @@ Page({
     idPhotoForm: {
       option: '白底证件照'
     },
+    fashionForm: {
+      style: '马克笔',
+      customStyle: '',
+      detail: ''
+    },
     resumeForm: {
       experience: '',
       targetRole: '',
@@ -133,7 +146,8 @@ Page({
       sceneDesc: ''
     },
     generating: false,
-    resultImage: ''
+    resultImage: '',
+    resultText: ''
   },
 
   onLoad(options) {
@@ -177,6 +191,8 @@ Page({
       isTryOn: false,
       isHighEqReply: false,
       isIdPhoto: false,
+      isFashionRender: false,
+      isFashionColoring: false,
       isResumePolish: false,
       isSellingPoints: false,
       isOldPhotoRestore: false,
@@ -192,12 +208,19 @@ Page({
         clothing: [],
         person: []
       },
+      fashionModelImages: [],
+      fashionForm: {
+        style: fashionColorStyles[0],
+        customStyle: '',
+        detail: ''
+      },
       mockupSceneImages: [],
       mockupForm: {
         materialDesc: '',
         sceneDesc: ''
       },
       resultImage: '',
+      resultText: '',
       prompt: this.buildTemplatePrompt(template)
     });
 
@@ -220,6 +243,8 @@ Page({
       const isTryOn = skillId === 'try-on';
       const isHighEqReply = skillId === 'high-eq-reply';
       const isIdPhoto = skillId === 'id-photo';
+      const isFashionRender = skillId === 'fashion-render';
+      const isFashionColoring = skillId === 'fashion-coloring';
       const isResumePolish = skillId === 'resume-polish';
       const isSellingPoints = skillId === 'selling-points';
       const isOldPhotoRestore = skillId === 'old-photo-restore';
@@ -241,6 +266,8 @@ Page({
         isTryOn,
         isHighEqReply,
         isIdPhoto,
+        isFashionRender,
+        isFashionColoring,
         isResumePolish,
         isSellingPoints,
         isOldPhotoRestore,
@@ -261,12 +288,19 @@ Page({
           clothing: [],
           person: []
         },
+        fashionModelImages: [],
+        fashionForm: {
+          style: fashionColorStyles[0],
+          customStyle: '',
+          detail: ''
+        },
         mockupSceneImages: [],
         mockupForm: {
           materialDesc: '',
           sceneDesc: ''
         },
         resultImage: '',
+        resultText: '',
         prompt: '',
         'marketingForm.noteStyle': currentStyles[0],
         'travelForm.style': travelStyles[0],
@@ -344,20 +378,8 @@ Page({
       return;
     }
 
-    const currentImages = this.data.tryOnImages[field] || [];
-
-    if (currentImages.length >= 9) {
-      wx.showToast({
-        title: '最多上传9张图片',
-        icon: 'none'
-      });
-      return;
-    }
-
-    const remainCount = Math.max(1, 9 - currentImages.length);
-
     wx.chooseMedia({
-      count: remainCount,
+      count: 1,
       mediaType: ['image'],
       sourceType: ['album', 'camera'],
       success: res => {
@@ -369,30 +391,16 @@ Page({
           return;
         }
 
-        const nextImages = currentImages.concat(files).slice(0, 9);
-
         this.setData({
-          [`tryOnImages.${field}`]: nextImages
+          [`tryOnImages.${field}`]: files.slice(0, 1)
         });
       }
     });
   },
 
   handleChooseMockupSceneImage() {
-    const currentImages = this.data.mockupSceneImages || [];
-
-    if (currentImages.length >= 9) {
-      wx.showToast({
-        title: '最多上传9张图片',
-        icon: 'none'
-      });
-      return;
-    }
-
-    const remainCount = Math.max(1, 9 - currentImages.length);
-
     wx.chooseMedia({
-      count: remainCount,
+      count: 1,
       mediaType: ['image'],
       sourceType: ['album', 'camera'],
       success: res => {
@@ -405,7 +413,30 @@ Page({
         }
 
         this.setData({
-          mockupSceneImages: currentImages.concat(files).slice(0, 9)
+          mockupSceneImages: files.slice(0, 1)
+        });
+      }
+    });
+  },
+
+  handleChooseFashionModelImage() {
+    const currentImages = [];
+
+    wx.chooseMedia({
+      count: 1,
+      mediaType: ['image'],
+      sourceType: ['album', 'camera'],
+      success: res => {
+        const files = (res.tempFiles || [])
+          .map(file => file.tempFilePath)
+          .filter(Boolean);
+
+        if (!files.length) {
+          return;
+        }
+
+        this.setData({
+          fashionModelImages: currentImages.concat(files).slice(0, 1)
         });
       }
     });
@@ -413,11 +444,12 @@ Page({
 
   getFirstInputImage() {
     const uploadedImages = this.data.uploadedImages || [];
+    const fashionModelImages = this.data.fashionModelImages || [];
     const sceneImages = this.data.mockupSceneImages || [];
     const clothingImages = this.data.tryOnImages.clothing || [];
     const personImages = this.data.tryOnImages.person || [];
 
-    return uploadedImages[0] || sceneImages[0] || personImages[0] || clothingImages[0] || '';
+    return uploadedImages[0] || fashionModelImages[0] || sceneImages[0] || personImages[0] || clothingImages[0] || '';
   },
 
   handlePromptInput(event) {
@@ -486,6 +518,18 @@ Page({
     });
   },
 
+  handleFashionInput(event) {
+    const field = event.currentTarget.dataset.field;
+
+    if (!field) {
+      return;
+    }
+
+    this.setData({
+      [`fashionForm.${field}`]: event.detail.value
+    });
+  },
+
   handleResumeInput(event) {
     const field = event.currentTarget.dataset.field;
 
@@ -516,6 +560,12 @@ Page({
     });
   },
 
+  handleHotspotStyleSelect(event) {
+    this.setData({
+      'marketingForm.hotspotStyle': event.currentTarget.dataset.style
+    });
+  },
+
   handleTravelStyleSelect(event) {
     this.setData({
       'travelForm.style': event.currentTarget.dataset.style
@@ -531,6 +581,12 @@ Page({
   handleIdPhotoOptionSelect(event) {
     this.setData({
       'idPhotoForm.option': event.currentTarget.dataset.option
+    });
+  },
+
+  handleFashionStyleSelect(event) {
+    this.setData({
+      'fashionForm.style': event.currentTarget.dataset.style
     });
   },
 
@@ -631,10 +687,11 @@ Page({
   },
 
   buildTemplatePrompt(template) {
+    const templatePrompt = template.prompt || '保留参考图主体，增强画面氛围、构图和质感。';
+
     return [
       `按「${template.title || '模板'}」生成同款风格图片`,
-      `图片比例：${this.data.selectedImageRatio}`,
-      '保留参考图主体，增强画面氛围、构图和质感。'
+      templatePrompt
     ].join('\n');
   },
 
@@ -680,6 +737,27 @@ Page({
       return [
         `证件照类型：${this.data.idPhotoForm.option || '未选择'}`,
         `补充需求：${this.data.prompt || '生成自然清晰、适合正式使用的证件照'}`
+      ].join('\n');
+    }
+
+    if (this.data.isFashionRender) {
+      return [
+        '任务：根据服装线稿和模特图生成服装设计效果图',
+        `服装线稿：${this.data.uploadedImages.length ? `已上传${this.data.uploadedImages.length}张` : '未上传'}`,
+        `模特图：${this.data.fashionModelImages.length ? `已上传${this.data.fashionModelImages.length}张` : '未上传'}`,
+        `补充需求：${this.data.prompt || '把线稿设计自然呈现在模特身上，补全面料、颜色、结构细节和成衣质感'}`
+      ].join('\n');
+    }
+
+    if (this.data.isFashionColoring) {
+      const form = this.data.fashionForm;
+      const coloringStyle = form.style === '自定义' ? form.customStyle : form.style;
+
+      return [
+        '任务：根据服装设计线稿进行上色',
+        `上色风格：${coloringStyle || '未填写'}`,
+        `具体描述：${form.detail || '未填写'}`,
+        `生成要求：${this.data.skill.defaultPrompt || '保持线稿结构清晰，完成服装色彩、材质和明暗表现'}`
       ].join('\n');
     }
 
@@ -765,6 +843,7 @@ Page({
       return [
         `行业：${this.data.marketingForm.industry || '未填写'}`,
         `品类：${this.data.marketingForm.category || '未填写'}`,
+        `生成风格：${this.data.marketingForm.hotspotStyle || '同城热点'}`,
         `补充需求：${this.data.prompt || '追踪近期市场热点，并给出适合商家使用的内容方向'}`
       ].join('\n');
     }
@@ -1034,6 +1113,36 @@ Page({
       }
     }
 
+    if (this.data.isFashionRender) {
+      if (!this.data.uploadedImages.length) {
+        wx.showToast({
+          title: '请上传服装线稿',
+          icon: 'none'
+        });
+        return;
+      }
+
+      if (!this.data.fashionModelImages.length) {
+        wx.showToast({
+          title: '请上传模特图',
+          icon: 'none'
+        });
+        return;
+      }
+    }
+
+    if (
+      this.data.isFashionColoring &&
+      this.data.fashionForm.style === '自定义' &&
+      !this.data.fashionForm.customStyle.trim()
+    ) {
+      wx.showToast({
+        title: '请输入自定义上色风格',
+        icon: 'none'
+      });
+      return;
+    }
+
     if (this.data.isImageSkill && !this.data.isTryOn && !this.data.isMockupRender && !this.data.uploadedImages.length) {
       wx.showToast({
         title: '请先上传图片',
@@ -1067,7 +1176,7 @@ Page({
       if (!result.ok) {
         wx.showModal({
           title: '无法生成',
-          content: result.message || '当前次数或积分不足',
+          content: result.message || '当前积分不足',
           confirmText: '去充值',
           cancelText: '稍后',
           confirmColor: '#92400e',
@@ -1095,6 +1204,7 @@ Page({
     this.setData({
       generating: true,
       resultImage: '',
+      resultText: '',
       prompt: generationPrompt
     });
 
@@ -1111,12 +1221,17 @@ Page({
           material: this.data.uploadedImages,
           scene: this.data.mockupSceneImages
         }
+        : (this.data.isFashionRender
+        ? {
+          sketch: this.data.uploadedImages,
+          model: this.data.fashionModelImages
+        }
         : (this.data.isTryOn
         ? {
           clothing: this.data.tryOnImages.clothing,
           person: this.data.tryOnImages.person
         }
-        : this.data.uploadedImages)
+        : this.data.uploadedImages))
     }).then(data => {
       setTimeout(() => {
         this.queryLocalTask(data.taskId);
@@ -1148,13 +1263,15 @@ Page({
     }
 
     const resultImage = task.resultImage || mock.mockResultImages[0];
+    const resultText = task.resultText || '';
 
     this.setData({
       generating: false,
-      resultImage
+      resultImage,
+      resultText
     });
 
-    this.saveRecord(resultImage);
+    this.saveRecord(resultImage, resultText);
   },
 
   handleTaskFailed(title) {
@@ -1168,7 +1285,7 @@ Page({
     });
   },
 
-  saveRecord(resultImage) {
+  saveRecord(resultImage, resultText) {
     mock.saveRecord({
       skillId: this.data.skillId,
       skillTitle: this.data.skill.title,
@@ -1179,13 +1296,19 @@ Page({
           material: this.data.uploadedImages,
           scene: this.data.mockupSceneImages
         }
+        : (this.data.isFashionRender
+        ? {
+          sketch: this.data.uploadedImages,
+          model: this.data.fashionModelImages
+        }
         : (this.data.isTryOn
         ? {
           clothing: this.data.tryOnImages.clothing,
           person: this.data.tryOnImages.person
         }
-        : this.data.uploadedImages),
-      resultImage
+        : this.data.uploadedImages)),
+      resultImage,
+      resultText
     });
   },
 

@@ -3,15 +3,15 @@ const request = require('../../utils/request');
 Page({
   data: {
     points: 20,
-    todayLeft: 20,
     avatarUrl: '/assets/membership/avatar.png',
     memberLevel: '普通会员',
+    memberExpireText: '未开通',
     selectedId: 'month',
     selectedPackage: {
       id: 'month',
       name: '月度套餐',
-      price: '29.9',
-      points: 500
+      price: '39.9',
+      points: 600
     },
     packages: [
       {
@@ -29,9 +29,9 @@ Page({
         name: '月度套餐',
         badge: '最受欢迎',
         badgeClass: 'badge-red',
-        price: '29.9',
+        price: '39.9',
         period: '月',
-        points: 500,
+        points: 600,
         desc: '每日创作，营销修图都够用'
       },
       {
@@ -39,19 +39,19 @@ Page({
         name: '半年套餐',
         badge: '省钱优选',
         badgeClass: 'badge-green',
-        price: '99',
+        price: '199',
         period: '半年',
-        points: 2200,
-        desc: '平均每月约 ¥16.5'
+        points: 3600,
+        desc: '平均每月约 ¥33.2'
       },
       {
         id: 'year',
         name: '年度套餐',
         badge: '超值推荐',
         badgeClass: 'badge-purple',
-        price: '168',
+        price: '399',
         period: '年',
-        points: 5000,
+        points: 7200,
         desc: '适合长期创作者和商家'
       }
     ],
@@ -64,7 +64,7 @@ Page({
       {
         icon: '/assets/membership/rule-note.png',
         title: '营销笔记生成',
-        cost: '20 积分 / 次'
+        cost: '30 积分 / 次'
       },
       {
         icon: '/assets/membership/rule-retouch.png',
@@ -109,8 +109,8 @@ Page({
 
       this.setData({
         points: wallet.points || 0,
-        todayLeft: wallet.todayLeft || 0,
         memberLevel: wallet.memberLevel || '普通会员',
+        memberExpireText: wallet.memberExpireText || '未开通',
         avatarUrl: profile.avatarUrl || '/assets/membership/avatar.png'
       });
     });
@@ -145,6 +145,12 @@ Page({
     wx.showToast({
       title: '充值记录即将上线',
       icon: 'none'
+    });
+  },
+
+  goTopup() {
+    wx.navigateTo({
+      url: '/pages/topup/topup'
     });
   },
 

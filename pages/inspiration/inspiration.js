@@ -51,7 +51,7 @@ Page({
       sourceId: item.id,
       title: item.title,
       desc: `灵感分类：${item.category}`,
-      image: '',
+      image: item.image || '',
       payload: item
     });
 

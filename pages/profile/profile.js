@@ -6,8 +6,8 @@ Page({
     nickName: '微信用户',
     avatarUrl: '/assets/profile/avatar-pixel.png',
     memberLevel: '普通会员',
+    memberExpireText: '未开通',
     points: 20,
-    todayLeft: 20,
     totalCount: 0
   },
 
@@ -26,8 +26,8 @@ Page({
         nickName: profile.nickName || '微信用户',
         avatarUrl: profile.avatarUrl || '/assets/profile/avatar-pixel.png',
         memberLevel: wallet.memberLevel || '普通会员',
+        memberExpireText: wallet.memberExpireText || '未开通',
         points: wallet.points || 0,
-        todayLeft: wallet.todayLeft || 0,
         totalCount: wallet.totalCreations || 0
       });
     });
@@ -43,7 +43,7 @@ Page({
     }
 
     wx.getUserProfile({
-      desc: '用于展示头像昵称和同步创作次数',
+      desc: '用于展示头像昵称和同步创作记录',
       success: res => {
         wx.login({
           success: loginRes => {
@@ -90,6 +90,12 @@ Page({
   goMembership() {
     wx.navigateTo({
       url: '/pages/membership/membership'
+    });
+  },
+
+  goTopup() {
+    wx.navigateTo({
+      url: '/pages/topup/topup'
     });
   },
 

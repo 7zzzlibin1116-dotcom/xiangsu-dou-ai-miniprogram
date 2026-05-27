@@ -74,6 +74,12 @@
   background-size: 54rpx 54rpx;
 }
 
+.template-image {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
 .prototype-block {
   position: absolute;
   border-radius: 18rpx;

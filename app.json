@@ -6,8 +6,10 @@
     "pages/profile/profile",
     "pages/contact/contact",
     "pages/about/about",
+    "pages/legal/legal",
     "pages/skill/skill",
     "pages/membership/membership",
+    "pages/topup/topup",
     "pages/favorites/favorites"
   ],
   "window": {

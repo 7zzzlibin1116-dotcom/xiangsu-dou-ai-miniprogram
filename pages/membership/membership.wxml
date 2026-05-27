@@ -9,7 +9,7 @@
   <view class="hero-title-row">
     <view class="hero-title">像素豆会员中心</view>
   </view>
-  <view class="hero-subtitle">充值积分，解锁更多 AI 创作次数</view>
+  <view class="hero-subtitle">充值积分，解锁更多 AI 创作能力</view>
 
   <view class="balance-card card-shadow">
     <image class="member-avatar" src="{{avatarUrl}}" mode="aspectFill"></image>
@@ -18,13 +18,13 @@
       <view class="balance-value-row">
         <text class="balance-value">{{points}}</text>
       </view>
-      <view class="balance-desc">今日剩余次数：{{todayLeft}}次 <text class="tiny-help">?</text></view>
     </view>
     <view class="member-status">
       <view class="status-label">会员状态</view>
       <view class="status-name">
         <text>{{memberLevel}}</text>
       </view>
+      <view class="status-expire">到期时间：{{memberExpireText}}</view>
     </view>
   </view>
 
@@ -84,6 +84,17 @@
         <view class="benefit-text">{{item.text}}</view>
       </view>
     </view>
+  </view>
+
+  <view class="topup-entry card-shadow" bindtap="goTopup">
+    <view class="topup-left">
+      <image class="topup-icon" src="/assets/membership/benefit-coin.png" mode="aspectFit"></image>
+      <view>
+        <view class="topup-title">积分加油包</view>
+        <view class="topup-desc">自定义充值积分，1 元 = 20 积分</view>
+      </view>
+    </view>
+    <view class="topup-action">去充值 ›</view>
   </view>
 
   <view class="bottom-safe"></view>

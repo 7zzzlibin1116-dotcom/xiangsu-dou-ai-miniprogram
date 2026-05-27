@@ -194,7 +194,22 @@
     </view>
 
     <view class="field-block">
-      <view class="field-label">二. 补充需求</view>
+      <view class="field-label">二. 选择生成风格</view>
+      <view class="style-grid">
+        <view
+          wx:for="{{hotspotStyles}}"
+          wx:key="*this"
+          class="style-chip {{marketingForm.hotspotStyle === item ? 'style-chip-active' : ''}}"
+          data-style="{{item}}"
+          bindtap="handleHotspotStyleSelect"
+        >
+          {{item}}
+        </view>
+      </view>
+    </view>
+
+    <view class="field-block">
+      <view class="field-label">三. 补充需求</view>
       <textarea
         class="prompt-input"
         maxlength="500"
@@ -467,10 +482,7 @@
     <view class="field-block">
       <view class="field-label">一. 上传衣服照片</view>
       <button class="upload-box {{tryOnImages.clothing.length ? 'upload-box-filled' : ''}}" data-field="clothing" bindtap="handleChooseTryOnImage">
-        <view wx:if="{{tryOnImages.clothing.length}}" class="uploaded-grid">
-          <image wx:for="{{tryOnImages.clothing}}" wx:key="*this" class="uploaded-grid-image" src="{{item}}" mode="aspectFill"></image>
-          <view wx:if="{{tryOnImages.clothing.length < 9}}" class="uploaded-add">+</view>
-        </view>
+        <image wx:if="{{tryOnImages.clothing.length}}" class="uploaded-image" src="{{tryOnImages.clothing[0]}}" mode="aspectFill"></image>
         <view wx:else class="upload-placeholder">
           <image class="upload-icon" src="/assets/common/upload.png" mode="aspectFit"></image>
           <view class="upload-text">上传衣服照片</view>
@@ -481,10 +493,7 @@
     <view class="field-block">
       <view class="field-label">二. 上传本人照片</view>
       <button class="upload-box {{tryOnImages.person.length ? 'upload-box-filled' : ''}}" data-field="person" bindtap="handleChooseTryOnImage">
-        <view wx:if="{{tryOnImages.person.length}}" class="uploaded-grid">
-          <image wx:for="{{tryOnImages.person}}" wx:key="*this" class="uploaded-grid-image" src="{{item}}" mode="aspectFill"></image>
-          <view wx:if="{{tryOnImages.person.length < 9}}" class="uploaded-add">+</view>
-        </view>
+        <image wx:if="{{tryOnImages.person.length}}" class="uploaded-image" src="{{tryOnImages.person[0]}}" mode="aspectFill"></image>
         <view wx:else class="upload-placeholder">
           <image class="upload-icon" src="/assets/common/upload.png" mode="aspectFit"></image>
           <view class="upload-text">上传本人照片</view>
@@ -514,14 +523,115 @@
     </view>
   </view>
 
+  <view wx:elif="{{isFashionRender}}" class="form-card card-shadow">
+    <view class="field-block">
+      <view class="field-label">一. 上传服装线稿</view>
+      <button class="upload-box {{uploadedImages.length ? 'upload-box-filled' : ''}}" bindtap="handleChooseImage">
+        <image wx:if="{{uploadedImages.length}}" class="uploaded-image" src="{{uploadedImages[0]}}" mode="aspectFill"></image>
+        <view wx:else class="upload-placeholder">
+          <image class="upload-icon" src="/assets/common/upload.png" mode="aspectFit"></image>
+          <view class="upload-text">上传服装线稿</view>
+        </view>
+      </button>
+    </view>
+
+    <view class="field-block">
+      <view class="field-label">二. 上传模特图</view>
+      <button class="upload-box {{fashionModelImages.length ? 'upload-box-filled' : ''}}" bindtap="handleChooseFashionModelImage">
+        <image wx:if="{{fashionModelImages.length}}" class="uploaded-image" src="{{fashionModelImages[0]}}" mode="aspectFill"></image>
+        <view wx:else class="upload-placeholder">
+          <image class="upload-icon" src="/assets/common/upload.png" mode="aspectFit"></image>
+          <view class="upload-text">上传模特图</view>
+        </view>
+      </button>
+    </view>
+
+    <view class="field-block">
+      <view class="field-label">三. 补充效果描述</view>
+      <textarea
+        class="prompt-input"
+        maxlength="500"
+        value="{{prompt}}"
+        placeholder="例如：把线稿做成白色廓形外套，通勤风，自然穿在模特身上，面料有轻微光泽"
+        placeholder-class="input-placeholder"
+        bindinput="handlePromptInput"
+      ></textarea>
+      <view class="input-count">{{prompt.length}}/500</view>
+    </view>
+
+    <view
+      class="generate-button {{generating ? 'generate-button-disabled' : ''}}"
+      bindtap="handleGenerate"
+    >
+      <image class="button-icon" src="/assets/common/magic-generate.png" mode="aspectFit"></image>
+      <text>{{generating ? '生成中...' : '立即生成'}}</text>
+    </view>
+  </view>
+
+  <view wx:elif="{{isFashionColoring}}" class="form-card card-shadow">
+    <view class="field-block">
+      <view class="field-label">一. 上传线稿素材</view>
+      <button class="upload-box {{uploadedImages.length ? 'upload-box-filled' : ''}}" bindtap="handleChooseImage">
+        <image wx:if="{{uploadedImages.length}}" class="uploaded-image" src="{{uploadedImages[0]}}" mode="aspectFill"></image>
+        <view wx:else class="upload-placeholder">
+          <image class="upload-icon" src="/assets/common/upload.png" mode="aspectFit"></image>
+          <view class="upload-text">上传线稿</view>
+        </view>
+      </button>
+    </view>
+
+    <view class="field-block">
+      <view class="field-label">二. 选择上色风格</view>
+      <view class="style-grid">
+        <view
+          wx:for="{{fashionColorStyles}}"
+          wx:key="*this"
+          class="style-chip {{fashionForm.style === item ? 'style-chip-active' : ''}}"
+          data-style="{{item}}"
+          bindtap="handleFashionStyleSelect"
+        >
+          {{item}}
+        </view>
+      </view>
+      <input
+        wx:if="{{fashionForm.style === '自定义'}}"
+        class="custom-style-input"
+        value="{{fashionForm.customStyle}}"
+        data-field="customStyle"
+        placeholder="请输入自定义上色风格"
+        placeholder-class="input-placeholder"
+        bindinput="handleFashionInput"
+      />
+    </view>
+
+    <view class="field-block">
+      <view class="field-label">三. 具体描述</view>
+      <textarea
+        class="prompt-input"
+        maxlength="500"
+        value="{{fashionForm.detail}}"
+        data-field="detail"
+        placeholder="例如：外套上米白色，领口深棕色，裙摆浅蓝色，整体像马克笔手绘效果"
+        placeholder-class="input-placeholder"
+        bindinput="handleFashionInput"
+      ></textarea>
+      <view class="input-count">{{fashionForm.detail.length}}/500</view>
+    </view>
+
+    <view
+      class="generate-button {{generating ? 'generate-button-disabled' : ''}}"
+      bindtap="handleGenerate"
+    >
+      <image class="button-icon" src="/assets/common/magic-generate.png" mode="aspectFit"></image>
+      <text>{{generating ? '生成中...' : '立即生成'}}</text>
+    </view>
+  </view>
+
   <view wx:elif="{{isIdPhoto}}" class="form-card card-shadow">
     <view class="field-block">
       <view class="field-label">一. 上传人像照片</view>
       <button class="upload-box {{uploadedImages.length ? 'upload-box-filled' : ''}}" bindtap="handleChooseImage">
-        <view wx:if="{{uploadedImages.length}}" class="uploaded-grid">
-          <image wx:for="{{uploadedImages}}" wx:key="*this" class="uploaded-grid-image" src="{{item}}" mode="aspectFill"></image>
-          <view wx:if="{{uploadedImages.length < 9}}" class="uploaded-add">+</view>
-        </view>
+        <image wx:if="{{uploadedImages.length}}" class="uploaded-image" src="{{uploadedImages[0]}}" mode="aspectFill"></image>
         <view wx:else class="upload-placeholder">
           <image class="upload-icon" src="/assets/common/upload.png" mode="aspectFit"></image>
           <view class="upload-text">上传正面照片</view>
@@ -721,12 +831,9 @@
 
   <view wx:elif="{{isMockupRender}}" class="form-card card-shadow">
     <view class="field-block">
-      <view class="field-label">一. 上传图片或海报 <text class="optional-text">可多张</text></view>
+      <view class="field-label">一. 上传图片或海报 <text class="optional-text">仅单张</text></view>
       <button class="upload-box {{uploadedImages.length ? 'upload-box-filled' : ''}}" bindtap="handleChooseImage">
-        <view wx:if="{{uploadedImages.length}}" class="uploaded-grid">
-          <image wx:for="{{uploadedImages}}" wx:key="*this" class="uploaded-grid-image" src="{{item}}" mode="aspectFill"></image>
-          <view wx:if="{{uploadedImages.length < 9}}" class="uploaded-add">+</view>
-        </view>
+        <image wx:if="{{uploadedImages.length}}" class="uploaded-image" src="{{uploadedImages[0]}}" mode="aspectFill"></image>
         <view wx:else class="upload-placeholder">
           <image class="upload-icon" src="/assets/common/upload.png" mode="aspectFit"></image>
           <view class="upload-text">上传图片或海报</view>
@@ -749,12 +856,9 @@
     </view>
 
     <view class="field-block">
-      <view class="field-label">三. 上传想放置的位置 <text class="optional-text">可多张</text></view>
+      <view class="field-label">三. 上传想放置的位置 <text class="optional-text">仅单张</text></view>
       <button class="upload-box {{mockupSceneImages.length ? 'upload-box-filled' : ''}}" bindtap="handleChooseMockupSceneImage">
-        <view wx:if="{{mockupSceneImages.length}}" class="uploaded-grid">
-          <image wx:for="{{mockupSceneImages}}" wx:key="*this" class="uploaded-grid-image" src="{{item}}" mode="aspectFill"></image>
-          <view wx:if="{{mockupSceneImages.length < 9}}" class="uploaded-add">+</view>
-        </view>
+        <image wx:if="{{mockupSceneImages.length}}" class="uploaded-image" src="{{mockupSceneImages[0]}}" mode="aspectFill"></image>
         <view wx:else class="upload-placeholder">
           <image class="upload-icon" src="/assets/common/upload.png" mode="aspectFit"></image>
           <view class="upload-text">上传墙面/灯箱/门头照片</view>
@@ -804,10 +908,7 @@
     <view class="field-block">
       <view class="field-label">第一步：上传照片</view>
       <button class="upload-box {{uploadedImages.length ? 'upload-box-filled' : ''}}" bindtap="handleChooseImage">
-        <view wx:if="{{uploadedImages.length}}" class="uploaded-grid">
-          <image wx:for="{{uploadedImages}}" wx:key="*this" class="uploaded-grid-image" src="{{item}}" mode="aspectFill"></image>
-          <view wx:if="{{uploadedImages.length < 9}}" class="uploaded-add">+</view>
-        </view>
+        <image wx:if="{{uploadedImages.length}}" class="uploaded-image" src="{{uploadedImages[0]}}" mode="aspectFill"></image>
         <view wx:else class="upload-placeholder">
           <image class="upload-icon" src="/assets/common/upload.png" mode="aspectFit"></image>
           <view class="upload-text">上传老照片</view>
@@ -898,21 +999,6 @@
       </button>
     </view>
 
-    <view wx:if="{{isTemplateSimilar}}" class="field-block">
-      <view class="field-label">选择生成图片比例</view>
-      <view class="ratio-grid">
-        <view
-          wx:for="{{imageRatios}}"
-          wx:key="*this"
-          class="ratio-chip {{selectedImageRatio === item ? 'ratio-chip-active' : ''}}"
-          data-ratio="{{item}}"
-          bindtap="handleRatioSelect"
-        >
-          {{item}}
-        </view>
-      </view>
-    </view>
-
     <view wx:if="{{!isTemplateSimilar}}" class="field-block">
       <view wx:if="{{isDianpingImage}}" class="dianping-category-block">
         <view class="field-label">商家信息 <text class="optional-text">选填</text></view>
@@ -983,16 +1069,19 @@
     </view>
   </view>
 
-  <view wx:if="{{resultImage}}" class="result-card card-shadow">
+  <view wx:if="{{resultImage || resultText}}" class="result-card card-shadow">
     <view class="result-head">
       <view>
         <view class="result-title">生成结果</view>
-        <view class="result-subtitle">这是 mock 结果图，后续将由后端 AI 返回</view>
+        <view class="result-subtitle">这是 mock 图文结果，后续将由后端 AI 返回</view>
       </view>
       <view class="done-badge">已完成</view>
     </view>
-    <image class="result-image" src="{{resultImage}}" mode="aspectFill"></image>
-    <button class="download-button" bindtap="handleDownload">
+    <image wx:if="{{resultImage}}" class="result-image" src="{{resultImage}}" mode="aspectFill"></image>
+    <view wx:if="{{resultText}}" class="result-text-box">
+      <text>{{resultText}}</text>
+    </view>
+    <button wx:if="{{resultImage}}" class="download-button" bindtap="handleDownload">
       <image class="button-icon" src="/assets/common/download.png" mode="aspectFit"></image>
       <text>保存图片</text>
     </button>

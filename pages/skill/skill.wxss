@@ -443,6 +443,17 @@
   background: #fff7d6;
 }
 
+.result-text-box {
+  margin-top: 22rpx;
+  padding: 24rpx;
+  border-radius: 22rpx;
+  background: #fffaf0;
+  color: #374151;
+  font-size: 25rpx;
+  line-height: 1.6;
+  white-space: pre-line;
+}
+
 .download-button {
   margin-top: 24rpx;
   background: #facc15;

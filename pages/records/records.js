@@ -129,7 +129,7 @@ Page({
 
     wx.showModal({
       title: record.skillTitle,
-      content: `时间：${record.createdAt}\n需求：${record.prompt || '未填写'}\n状态：${record.status}`,
+      content: `时间：${record.createdAt}\n结果：${record.resultText || record.prompt || '未填写'}\n状态：${record.status}`,
       showCancel: false,
       confirmText: '知道了'
     });

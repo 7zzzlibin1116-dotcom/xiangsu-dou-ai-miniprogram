@@ -1,0 +1,25 @@
+<view class="page legal-page">
+  <view class="legal-card card-shadow">
+    <view class="legal-head">
+      <view class="legal-title">{{document.title}}</view>
+      <view class="legal-date">生效日期：{{document.effectiveDate}}</view>
+      <view class="legal-tip">本页面为像素豆 AI 小程序服务条款说明，正式上线前可根据主体信息、备案信息和实际业务继续补充。</view>
+    </view>
+
+    <view
+      wx:for="{{document.sections}}"
+      wx:key="title"
+      class="legal-section"
+    >
+      <view class="section-title">{{index + 1}}. {{item.title}}</view>
+      <view
+        wx:for="{{item.paragraphs}}"
+        wx:for-item="paragraph"
+        wx:key="*this"
+        class="section-paragraph"
+      >
+        {{paragraph}}
+      </view>
+    </view>
+  </view>
+</view>

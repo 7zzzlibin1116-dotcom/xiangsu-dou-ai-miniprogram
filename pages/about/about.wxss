@@ -22,3 +22,46 @@
   font-size: 28rpx;
   line-height: 1.8;
 }
+
+.legal-card {
+  margin-top: 28rpx;
+  padding-top: 30rpx;
+  padding-bottom: 18rpx;
+}
+
+.legal-title {
+  margin-bottom: 12rpx;
+  color: #111827;
+  font-size: 32rpx;
+  font-weight: 900;
+}
+
+.legal-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 96rpx;
+  border-bottom: 1rpx solid rgba(146, 64, 14, 0.08);
+}
+
+.legal-row:last-child {
+  border-bottom: 0;
+}
+
+.legal-row-title {
+  color: #1f2937;
+  font-size: 29rpx;
+  font-weight: 700;
+}
+
+.legal-arrow,
+.legal-version {
+  color: #9ca3af;
+  font-size: 30rpx;
+  font-weight: 700;
+}
+
+.legal-version {
+  color: #92400e;
+  font-size: 26rpx;
+}

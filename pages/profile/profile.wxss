@@ -100,7 +100,8 @@
 .member-row {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-start;
+  flex-wrap: wrap;
   gap: 18rpx;
   margin-top: 26rpx;
 }
@@ -118,12 +119,14 @@
   font-weight: 700;
 }
 
-.member-crown {
-  color: #f59e0b;
-  font-size: 25rpx;
+.member-expire {
+  color: #6b7280;
+  font-size: 22rpx;
+  white-space: nowrap;
 }
 
 .upgrade-link {
+  margin-left: auto;
   color: #92400e;
   font-size: 25rpx;
   font-weight: 800;

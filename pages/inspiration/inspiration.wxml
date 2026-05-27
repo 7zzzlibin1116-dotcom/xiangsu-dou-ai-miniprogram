@@ -21,12 +21,20 @@
     >
       <view class="prototype-card">
         <view class="prototype-visual">
-          <view class="prototype-spark prototype-spark-1"></view>
-          <view class="prototype-spark prototype-spark-2"></view>
-          <view class="prototype-block prototype-block-main"></view>
-          <view class="prototype-row prototype-row-1"></view>
-          <view class="prototype-row prototype-row-2"></view>
-          <view class="prototype-chip"></view>
+          <image
+            wx:if="{{item.image}}"
+            class="template-image"
+            src="{{item.image}}"
+            mode="aspectFill"
+          />
+          <block wx:else>
+            <view class="prototype-spark prototype-spark-1"></view>
+            <view class="prototype-spark prototype-spark-2"></view>
+            <view class="prototype-block prototype-block-main"></view>
+            <view class="prototype-row prototype-row-1"></view>
+            <view class="prototype-row prototype-row-2"></view>
+            <view class="prototype-chip"></view>
+          </block>
         </view>
         <view class="prototype-actions">
           <button

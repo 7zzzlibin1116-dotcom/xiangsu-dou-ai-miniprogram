@@ -2,22 +2,66 @@ const PROFILE_KEY = 'PIXELDOU_USER_PROFILE';
 const WALLET_KEY = 'PIXELDOU_USER_WALLET';
 const RECORDS_KEY = 'PIXELDOU_RECORDS';
 const DEFAULT_AVATAR = '/assets/profile/avatar-pixel.png';
-const DAILY_TOTAL = 20;
 
 const SKILL_COSTS = {
-  'marketing-note': 20,
+  'marketing-note': 30,
   'moments-copy': 10,
   'photo-retouch': 20,
   'dianping-image': 30,
   'old-photo-restore': 20,
   'watermark-remove': 0,
   'try-on': 20,
-  'fashion-render': 20
+  'fashion-render': 20,
+  'fashion-coloring': 20
 };
+
+const MEMBERSHIP_DAYS = {
+  day: 1,
+  month: 30,
+  half: 180,
+  year: 365
+};
+
+function getMemberLevelByPackage(pack = {}) {
+  if (pack.isTopup) {
+    return '';
+  }
+
+  if (pack.id === 'day' || pack.id === 'month') {
+    return '高级会员';
+  }
+
+  if (pack.id === 'half') {
+    return '钻石会员';
+  }
+
+  if (pack.id === 'year') {
+    return '黑金会员';
+  }
+
+  return '';
+}
+
+function getMembershipDays(pack = {}) {
+  return MEMBERSHIP_DAYS[pack.id] || 0;
+}
 
 function todayKey() {
   const date = new Date();
   const pad = value => String(value).padStart(2, '0');
+  return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}`;
+}
+
+function formatDate(timestamp) {
+  const value = Number(timestamp) || 0;
+
+  if (!value) {
+    return '未开通';
+  }
+
+  const date = new Date(value);
+  const pad = number => String(number).padStart(2, '0');
+
   return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}`;
 }
 
@@ -39,7 +83,9 @@ function getDefaultWallet() {
   return {
     points: 20,
     memberLevel: '普通会员',
-    dailyTotal: DAILY_TOTAL,
+    memberExpireAt: 0,
+    memberExpireText: '未开通',
+    dailyTotal: 0,
     dailyUsed: 0,
     lastActiveDate: todayKey()
   };
@@ -57,9 +103,19 @@ function normalizeWallet(wallet = {}) {
   }
 
   normalized.points = Math.max(0, Number(normalized.points) || 0);
-  normalized.dailyTotal = Number(normalized.dailyTotal) || DAILY_TOTAL;
-  normalized.dailyUsed = Math.max(0, Number(normalized.dailyUsed) || 0);
-  normalized.todayLeft = Math.max(0, normalized.dailyTotal - normalized.dailyUsed);
+  normalized.memberLevel = normalized.memberLevel || '普通会员';
+  if (normalized.memberLevel === '积分会员') {
+    normalized.memberLevel = '高级会员';
+  }
+  normalized.memberExpireAt = Math.max(0, Number(normalized.memberExpireAt) || 0);
+  if (normalized.memberExpireAt && normalized.memberExpireAt <= Date.now()) {
+    normalized.memberLevel = '普通会员';
+    normalized.memberExpireAt = 0;
+  }
+  normalized.memberExpireText = formatDate(normalized.memberExpireAt);
+  normalized.dailyTotal = 0;
+  normalized.dailyUsed = 0;
+  normalized.todayLeft = '不限';
   normalized.totalCreations = getRecords().length;
 
   wx.setStorageSync(WALLET_KEY, normalized);
@@ -136,14 +192,6 @@ function canGenerate(skill = {}) {
   const wallet = getWallet();
   const cost = getCostBySkill(skill);
 
-  if (wallet.todayLeft <= 0) {
-    return {
-      ok: false,
-      cost,
-      message: '今日生成次数已用完'
-    };
-  }
-
   if (wallet.points < cost) {
     return {
       ok: false,
@@ -169,8 +217,7 @@ function consumeForGeneration(skill = {}) {
   const wallet = getWallet();
   const nextWallet = normalizeWallet({
     ...wallet,
-    points: wallet.points - check.cost,
-    dailyUsed: wallet.dailyUsed + 1
+    points: wallet.points - check.cost
   });
 
   return {
@@ -182,20 +229,39 @@ function consumeForGeneration(skill = {}) {
 
 function recharge(pack = {}) {
   const wallet = getWallet();
+
+  if (pack.isTopup && wallet.memberLevel === '普通会员') {
+    return {
+      ok: false,
+      message: '积分加油包仅限会员购买，请先开通会员',
+      wallet
+    };
+  }
+
   const points = Number(pack.points) || 0;
+  const membershipDays = getMembershipDays(pack);
+  const memberLevel = getMemberLevelByPackage(pack) || wallet.memberLevel;
+  const memberExpireAt = membershipDays
+    ? Math.max(Date.now(), Number(wallet.memberExpireAt) || 0) + membershipDays * 24 * 60 * 60 * 1000
+    : wallet.memberExpireAt;
   const nextWallet = normalizeWallet({
     ...wallet,
     points: wallet.points + points,
-    memberLevel: points >= 500 ? '积分会员' : wallet.memberLevel
+    memberLevel,
+    memberExpireAt
   });
 
   return {
+    ok: true,
     wallet: nextWallet,
     rechargeRecord: {
       id: `recharge_${Date.now()}`,
       packageName: pack.name || '积分套餐',
       price: pack.price || '0',
       points,
+      memberLevel: nextWallet.memberLevel,
+      memberExpireAt: nextWallet.memberExpireAt,
+      memberExpireText: nextWallet.memberExpireText,
       createdAt: Date.now()
     }
   };
