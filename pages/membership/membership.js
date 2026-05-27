@@ -49,7 +49,7 @@ Page({
         name: '年度套餐',
         badge: '超值推荐',
         badgeClass: 'badge-purple',
-        price: '399',
+        price: '389',
         period: '年',
         points: 7200,
         desc: '适合长期创作者和商家'
